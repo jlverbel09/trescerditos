@@ -1,0 +1,251 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Exports\VentasExport;
+use App\Http\Requests\saveVentaRequest;
+use App\Models\Mesa;
+use App\Models\Producto;
+use App\Models\Ticket;
+use App\Models\Venta;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+
+class VentaController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(venta $venta)
+    {
+        $iva = 10;
+
+        $list = Venta::select(
+            'ventas.id',
+            'ventas.id_producto',
+            'nombre1',
+            'nombre2',
+            'comentario',
+            'cantidad',
+            'ventas.precio',
+            'precio_total',
+            'observacion',
+            'ventas.created_at',
+            'ventas.updated_at'
+        )
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')
+            ->paginate(10);
+        return view('venta.index', [
+            'iva' => $iva,
+            'data' => $list,
+            'titleform' => 'Venta'
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Venta $venta, Request $request)
+    {
+        if(!empty($request->idticket)){
+            Venta::where('estado','=',0)->where('id_mesa','=',$request->idmesa)->where('ticket','=',$request->idticket)->update(['estado' => 1]);
+            Mesa::where('numero', '=', $request->idmesa)
+            ->update(['estado' => 1]);
+        }
+        $suma = Venta::select('ventas.precio_total')
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')
+            ->where('ventas.id_mesa', '=', $request->idmesa)
+            ->where('ventas.estado', '=', 1)
+            ->sum('ventas.precio_total');
+
+        $mesasActivas = Venta::select('ticket')->where('ventas.id_mesa', '=', $request->idmesa)->where('estado','=',1)->count('ticket');
+
+        
+
+        $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
+
+        $mesas = Mesa::select('*')->orderBy('numero')->get();
+
+        $listProductos = Producto::get();
+        $list = Venta::select(
+            'ventas.id',
+            'ventas.id_producto',
+            'nombre1',
+            'nombre2',
+            'comentario',
+            'cantidad',
+            'ventas.precio',
+            'precio_total',
+            'observacion',
+            'ventas.created_at',
+            'ventas.updated_at',
+            'mesas.descripcion as mesa'
+        )
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')
+            ->join('mesas', 'mesas.numero', 'ventas.id_mesa')
+            ->where('ventas.id_mesa', '=', $request->idmesa)
+            ->where('ventas.estado', '=', 1)
+            ->get();
+
+
+        return view('venta.create', [
+            'mesaSelect' => [],
+            'mesas' => $mesas,
+            'ticket' => $ticket[0]['ticket'],
+            'data' => $list,
+            'iva' => $suma * 10 / 100,
+            'servicio' => $suma * 10 / 100,
+            'titleform' => 'Registrar Venta',
+            'listProducto' => $listProductos,
+            'venta' => new Venta(),
+            'ventaSelect' => [],
+            'mesasActivas' => $mesasActivas
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Venta $venta, saveVentaRequest $request)
+    {
+        Mesa::where('numero', '=', $request->id_mesa)
+            ->update(['estado' => 1]);
+
+        $venta->create([
+            'ticket' => /* $request->ticket */ 0,
+            'id_mesa' => $request->id_mesa,
+            'id_producto' => $request->id_producto,
+            'cantidad' => $request->cantidad,
+            'precio' => $request->precio,
+            'precio_total' => $request->precio_total,
+            'observacion' => $request->observacion,
+            'estado' => 1,
+        ]);
+        return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(venta $venta)
+    {
+        $mesas = Mesa::select('*')->orderBy('numero')->get();
+
+        $suma = Venta::select('ventas.precio')
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')->sum('ventas.precio');
+        $listProductos = Producto::get();
+        $list = Venta::select(
+            'ventas.id',
+            'ventas.id_producto',
+            'nombre1',
+            'nombre2',
+            'comentario',
+            'cantidad',
+            'ventas.precio',
+            'precio_total',
+            'observacion',
+            'ventas.created_at',
+            'ventas.updated_at'
+        )
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')
+            ->where('ventas.estado', '=', 1)
+            ->paginate(10);
+
+        return view('venta.edit', [
+            'mesas' => $mesas,
+            'mesaSelect' => [json_decode($venta->id_mesa)],
+            'data' => $list,
+            'iva' => $suma * 10 / 100,
+            'servicio' => $suma * 10 / 100,
+            'listProducto' => $listProductos,
+            'titleform' => 'Modificar venta',
+            'venta' => $venta,
+            'ventaSelect' => [json_decode($venta->id_producto)],
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(saveVentaRequest $request, Venta $venta)
+    {
+        $venta->update($request->validated());
+        return redirect()->route('venta.create')->with('status', 'Venta modificada correctamente');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(venta $venta)
+    {
+        $venta->delete();
+        return redirect()->route('venta.create.id', $venta->id_mesa)->with('status', 'Producto eliminado correctamente');
+    }
+
+    public function calculo(Request $response)
+    {
+        $id_producto =  $response['id_producto'];
+        $list = Producto::select('*')->where('id_producto', '=', $id_producto)
+            ->paginate(10);
+        return $list[0]->precio;
+    }
+
+
+    public function ventasCerradas()
+    {
+
+        $data = Venta::select(
+            'ventas.ticket',
+            'mesas.numero',
+            'mesas.estado as estadomesa',
+            'mesas.descripcion as mesa',
+            'productos.nombre1',
+            'productos.nombre2',
+            'productos.precio',
+            'ventas.precio',
+            DB::raw('CASE WHEN ventas.estado = 0 THEN \'CERRADA\' ELSE \'ABIERTA\' END AS estado'),
+            'ventas.precio_total',
+            'ventas.cantidad',
+            'ventas.observacion'
+        )
+            ->join('mesas', 'mesas.numero', 'ventas.id_mesa')
+            ->join('productos', 'productos.id_producto', 'ventas.id_producto')
+            //->where('ventas.estado', '=', 0)
+
+            ->orderBy('ticket', 'desc')
+
+            ->get();
+
+        return view('ventas-cerradas.index', [
+            'titleform' => 'Histórico',
+            'data' => $data
+        ]);
+    }
+
+    public function reabrirVenta(Request $request)
+    {
+        
+        $idmesa = $request['id_mesa'];
+        $data = Venta::select('ticket')->where('ventas.id_mesa','=',$idmesa)->where('ventas.estado','=',0)->orderBy('ticket','desc')->limit(1)->get();
+        if(!empty($data[0]->ticket)){
+            Venta::where('ventas.id_mesa','=',$request['id_mesa'])->where('ventas.ticket','=',$data[0]->ticket)->update([
+                'estado' => 1
+            ]);
+            Mesa::where('numero', '=', $request->id_mesa)
+            ->update(['estado' => 1]);
+            return true;
+            
+        }
+        return 0;
+    }
+
+    public function exportarVentas()
+    {
+        return Excel::download(new VentasExport, 'ventas.xlsx');
+    }
+
+  
+}

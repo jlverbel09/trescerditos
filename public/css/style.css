@@ -1,0 +1,76 @@
+body{
+    background-color: #242526;
+   
+}
+h1, h2,h3,h4,h5,h6, label,p{
+    color: white;
+}
+input, select {
+    background-color: white;
+}
+
+table {
+    background-color: white;
+    border: none;
+}
+
+
+body .navbar{
+    background-color: #343a40 !important;
+}
+.bordeado{
+    border-bottom: 5px solid #49ff00;
+    border-top: 2px solid #49ff00;
+    border-left: 2px solid #49ff00;
+    border-right: 2px solid #49ff00;
+}
+.listadomenu{
+    display: flex;
+    text-decoration: none;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.listadomenu li{
+    width: -webkit-fill-available;
+    text-align: center;
+    border: 1px solid;
+    text-transform: uppercase;
+}
+.logo{
+    position: relative;
+    top: -5px;
+    left: 8px;
+    border-radius: 5px;
+}
+
+.cabecera{
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+@media (max-width: 1024px){
+    .scroll{
+        overflow: scroll;
+    }
+}
+@media (min-width: 1024px) {
+    body{
+        position: fixed;
+        width: 100%;
+    }
+    .table-producto{
+        overflow-y: scroll;
+        height: 78vh !important;
+    }
+    .table-ventas{
+        overflow-y: scroll;
+        height: 40vh !important;
+    }
+    .table-ventas-cerradas{
+        overflow-y: scroll;
+        height: 65vh;
+    }
+}
