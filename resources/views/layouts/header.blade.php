@@ -1,11 +1,14 @@
-<nav class="main-header navbar navbar-expand d-flex flex-wrap justify-content-between text-white navbar-light " style="background-color: #92c1df">
+<nav class=" main-header navbar navbar-expand d-flex flex-wrap justify-content-between text-white navbar-light " style="background-color: #92c1df">
     <!-- Left navbar links -->
-    <ul class="navbar-nav  text cabecera" @style('width:initial')>
-        <li>
+    <ul class="navbar-nav  text cabecera row  w-100 mb-1" @style('width:initial')>
+        <li class="col-1">
             <img width="80px" height="auto" class="logo" src="{{asset('img/logo.png')}}" alt="">
         </li>
-        <li>
+        <li class="col-5 ">
             <h4 class="text-white me-2 ms-3 "><a class="text-decoration-none text-primary" href="{{ route('producto.create') }} ">Empanaderia China Los Tres Cerditos</a></h4>
+        </li>
+        <li class="col-6  ">
+            @include('layouts.navigation')
         </li>
     </ul>
 
@@ -23,4 +26,6 @@
         
     </ul>
     @include('layouts.header-section')
+    
+    
 </nav>

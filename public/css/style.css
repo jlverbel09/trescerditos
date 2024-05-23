@@ -1,11 +1,21 @@
-body{
+body {
     background-color: #242526;
-   
+
 }
-h1, h2,h3,h4,h5,h6, label,p{
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+p {
     color: white;
 }
-input, select {
+
+input,
+select {
     background-color: white;
 }
 
@@ -14,17 +24,28 @@ table {
     border: none;
 }
 
+.logologin {
+    border-radius: 10px;
+    width: 50%;
+}
 
-body .navbar{
+.logocenter {
+    justify-content: center;
+    display: flex
+}
+
+body .navbar {
     background-color: #343a40 !important;
 }
-.bordeado{
+
+.bordeado {
     border-bottom: 5px solid #49ff00;
     border-top: 2px solid #49ff00;
     border-left: 2px solid #49ff00;
     border-right: 2px solid #49ff00;
 }
-.listadomenu{
+
+.listadomenu {
     display: flex;
     text-decoration: none;
     list-style: none;
@@ -32,44 +53,74 @@ body .navbar{
     align-items: center;
     width: 100%;
 }
-.listadomenu li{
+
+.listadomenu li {
     width: -webkit-fill-available;
     text-align: center;
     border: 1px solid;
     text-transform: uppercase;
 }
-.logo{
+
+.logo {
     position: relative;
     top: -5px;
     left: 8px;
     border-radius: 5px;
 }
 
-.cabecera{
+.cabecera {
     display: flex;
     align-items: center;
     text-transform: uppercase;
 }
 
-@media (max-width: 1024px){
-    .scroll{
+.fondos {
+    position: absolute;
+    z-index: -1;
+    display: flex;
+    flex-wrap: wrap;
+    top: 0;
+    left: 0;
+}
+
+.fondo {
+    width: 255px;
+    height: 250px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.divencima {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backdrop-filter: blur(1px);
+    z-index: -1;
+}
+
+@media (max-width: 1024px) {
+    .scroll {
         overflow: scroll;
     }
 }
+
 @media (min-width: 1024px) {
-    body{
+    body {
         position: fixed;
         width: 100%;
     }
-    .table-producto{
+
+    .table-producto {
         overflow-y: scroll;
         height: 78vh !important;
     }
-    .table-ventas{
+
+    .table-ventas {
         overflow-y: scroll;
         height: 40vh !important;
     }
-    .table-ventas-cerradas{
+
+    .table-ventas-cerradas {
         overflow-y: scroll;
         height: 65vh;
     }
