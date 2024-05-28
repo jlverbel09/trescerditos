@@ -10,6 +10,7 @@ use App\Models\Producto;
 use App\Models\Ticket;
 use App\Models\Venta;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,11 +52,11 @@ class VentaController extends Controller
      */
     public function create(Venta $venta, Request $request)
     {
-        if(!empty($request->idticket)){
-            Venta::where('estado','=',0)->where('id_mesa','=',$request->idmesa)->where('ticket','=',$request->idticket)->update(['estado' => 1]);
+        
+        if (!empty($request->idticket)) {
+            Venta::where('estado', '=', 0)->where('id_mesa', '=', $request->idmesa)->where('ticket', '=', $request->idticket)->update(['estado' => 1]);
             Mesa::where('numero', '=', $request->idmesa)
-            ->update(['estado' => 1]);
-           
+                ->update(['estado' => 1]);
         }
         $suma = Venta::select('ventas.precio_total')
             ->join('productos', 'productos.id_producto', 'ventas.id_producto')
@@ -63,13 +64,23 @@ class VentaController extends Controller
             ->where('ventas.estado', '=', 1)
             ->sum('ventas.precio_total');
 
-        $mesasActivas = Venta::select('ticket')->where('ventas.id_mesa', '=', $request->idmesa)->where('estado','=',1)->count('ticket');
+        $mesasActivas = Venta::select('ticket')->where('ventas.id_mesa', '=', $request->idmesa)->where('estado', '=', 1)->count('ticket');
 
-        
+
 
         $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
 
-        $mesas = Mesa::select('*')->orderBy('numero')->get();
+
+
+        $mesas = Mesa::select('mesas.id','numero','descripcion','ventas.estado',DB::raw('max(ventas.ticket) as ticket'))
+        ->leftJoin('ventas',function( $join){
+            $join->on('ventas.id_mesa','=','mesas.numero');
+            $join->where('ventas.estado','=',1);
+            //$join->where('ventas.ticket','!=',0);
+        })
+        ->groupBy('mesas.id','numero','descripcion','ventas.estado')
+        ->orderBy('numero')
+        ->get();
 
         $listProductos = Producto::get();
         $list = Venta::select(
@@ -94,10 +105,18 @@ class VentaController extends Controller
             ->get();
 
 
+        if (!empty($request->idticket)) {
+            $carga_ticket = $request->idticket;
+        } else {
+            $carga_ticket = $ticket[0]['ticket'].'0'.$request->idmesa;
+        }
+
+
+
         return view('venta.create', [
             'mesaSelect' => [],
             'mesas' => $mesas,
-            'ticket' => $ticket[0]['ticket'],
+            'ticket' => $carga_ticket,
             'data' => $list,
             'iva' => $suma * 10 / 100,
             'servicio' => $suma * 10 / 100,
@@ -115,9 +134,18 @@ class VentaController extends Controller
     public function store(Venta $venta, saveVentaRequest $request)
     {
 
-        $estadoInicial = Mesa::select('estado')->where('numero','=',$request->id_mesa)->get();
-        if($estadoInicial[0]->estado == 0){
-            $tiempo = strtotime('-15 minute', strtotime(date('Y-m-d ')));
+        $verif_ticket = Ticket::select('*')->where('ticket', '=', $request->ticket)->get();
+        
+
+        if(!empty($verif_ticket[0]->ticket)){
+            $nro_ticket = $verif_ticket[0]->ticket;
+        }else{
+            $nro_ticket = 0;
+        }
+
+        $estadoInicial = Mesa::select('estado')->where('numero', '=', $request->id_mesa)->get();
+        if ($estadoInicial[0]->estado == 0) {
+            $tiempo = strtotime('-1 minute', strtotime(date('Y-m-d h:i:s')));
             Log::create([
                 'id_user' => Auth::user()->id,
                 'ticket' => 0,
@@ -125,15 +153,17 @@ class VentaController extends Controller
                 'accion' => 'APERTURA MESA',
                 'descripcion' => '',
                 'created_at' => $tiempo
-            ]); 
+            ]);
         }
         Mesa::where('numero', '=', $request->id_mesa)
             ->update(['estado' => 1]);
 
-        
+
+
+
 
         $venta->create([
-            'ticket' => /* $request->ticket */ 0,
+            'ticket' => $nro_ticket,
             'id_mesa' => $request->id_mesa,
             'id_producto' => $request->id_producto,
             'cantidad' => $request->cantidad,
@@ -143,7 +173,7 @@ class VentaController extends Controller
             'estado' => 1,
         ]);
 
-        $producto = Producto::select()->where('id_producto','=',$request->id_producto)->get();
+        $producto = Producto::select()->where('id_producto', '=', $request->id_producto)->get();
         $nomb1 = $producto[0]->nombre1;
         $nomb2 = $producto[0]->nombre2;
         Log::create([
@@ -151,9 +181,14 @@ class VentaController extends Controller
             'ticket' => 0,
             'id_mesa' => $request->id_mesa,
             'accion' => 'SELECCION DE PLATO',
-            'descripcion' => 'CANTIDAD: '.$request->cantidad.' - PLATO: '.$nomb1.' - '.$nomb2
-        ]); 
-        return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
+            'descripcion' => 'CANTIDAD: ' . $request->cantidad . ' - PLATO: ' . $nomb1 . ' - ' . $nomb2
+        ]);
+
+        if(!empty($verif_ticket[0]->ticket)){
+            return redirect()->route('venta.create.id.ticket', [$request->id_mesa,$nro_ticket])->with('status', 'Datos de venta registrado correctamente');
+        }else{
+            return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
+        }
     }
 
 
@@ -211,8 +246,8 @@ class VentaController extends Controller
      */
     public function destroy(venta $venta)
     {
-        
-        $producto = Producto::select()->where('id_producto','=',$venta->id_producto)->get();
+
+        $producto = Producto::select()->where('id_producto', '=', $venta->id_producto)->get();
         $nomb1 = $producto[0]->nombre1;
         $nomb2 = $producto[0]->nombre2;
         Log::create([
@@ -220,8 +255,8 @@ class VentaController extends Controller
             'ticket' => 0,
             'id_mesa' => $venta->id_mesa,
             'accion' => 'ELIMINACION DE PLATO',
-            'descripcion' => 'CANTIDAD: '.$venta->cantidad.' - PLATO: '.$nomb1.' - '.$nomb2
-        ]); 
+            'descripcion' => 'CANTIDAD: ' . $venta->cantidad . ' - PLATO: ' . $nomb1 . ' - ' . $nomb2
+        ]);
 
 
         $venta->delete();
@@ -270,17 +305,16 @@ class VentaController extends Controller
 
     public function reabrirVenta(Request $request)
     {
-        
+
         $idmesa = $request['id_mesa'];
-        $data = Venta::select('ticket')->where('ventas.id_mesa','=',$idmesa)->where('ventas.estado','=',0)->orderBy('ticket','desc')->limit(1)->get();
-        if(!empty($data[0]->ticket)){
-            Venta::where('ventas.id_mesa','=',$request['id_mesa'])->where('ventas.ticket','=',$data[0]->ticket)->update([
+        $data = Venta::select('ticket')->where('ventas.id_mesa', '=', $idmesa)->where('ventas.estado', '=', 0)->orderBy('ticket', 'desc')->limit(1)->get();
+        if (!empty($data[0]->ticket)) {
+            Venta::where('ventas.id_mesa', '=', $request['id_mesa'])->where('ventas.ticket', '=', $data[0]->ticket)->update([
                 'estado' => 1
             ]);
             Mesa::where('numero', '=', $request->id_mesa)
-            ->update(['estado' => 1]);
+                ->update(['estado' => 1]);
             return true;
-            
         }
         return 0;
     }
@@ -289,6 +323,4 @@ class VentaController extends Controller
     {
         return Excel::download(new VentasExport, 'ventas.xlsx');
     }
-
-  
 }

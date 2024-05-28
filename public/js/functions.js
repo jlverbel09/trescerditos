@@ -1,3 +1,6 @@
+const enlace = 'http://'+window.location.host+'/';
+/* console.log(enlace);
+ */
 function calculoproducto() {
     var precio = $('#precio').val();
     var cantidad = $('#cantidad').val();
@@ -9,7 +12,7 @@ function calcularVenta() {
     var id_producto = $('#id_producto').val();
     $.ajax({
 
-        url: '../../ventacalculo',
+        url: enlace+'ventacalculo',
         data: { id_producto: id_producto },
         type: 'GET',
         dataType: 'json',
@@ -42,7 +45,7 @@ function adicionarServicio(total, servicio = 0) {
 function consultarMesaCerrada(id_ticket, id_mesa) {
     Swal.fire({
         title: "Seguro?",
-        text: "Se re-abrir el ticket #" + id_ticket + " de la mesa " + id_mesa,
+        text: "Se re-abrirá el ticket #" + id_ticket + " de la mesa " + id_mesa,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -50,7 +53,15 @@ function consultarMesaCerrada(id_ticket, id_mesa) {
         confirmButtonText: "Si, Re-abrir!"
     }).then((result) => {
         if (result.isConfirmed) {
-            location.href = ('../../venta/create/' + id_mesa + '/' + id_ticket)
+
+            $.ajax({
+                url: enlace+'log-reabrir',
+                data: { id_mesa: id_mesa , id_ticket:id_ticket},
+                type: 'GET',
+                dataType: 'json',
+            });
+
+            location.href = (enlace+'venta/create/' + id_mesa + '/' + id_ticket)
         }
     });
 
@@ -61,24 +72,24 @@ function consultarMesaCerrada(id_ticket, id_mesa) {
 
 function generarPDF(id_mesa, iva = 0) {
     var servicio = $('#ivatext').val()
-    //a = window.open('../../generate-pdf/' + id_mesa + '/' + iva +  '/' + servicio + '#toolbar=0', '_blank', 'height=650px, width=500px, top=20px, left=500px')
+    //a = window.open(enlace+'generate-pdf/' + id_mesa + '/' + iva +  '/' + servicio + '#toolbar=0', '_blank', 'height=650px, width=500px, top=20px, left=500px')
     //a.opener
 
     
-    a = window.open('../../generate-pdf/' + id_mesa + '/' + iva +  '/' + servicio + '#toolbar=0', '_blank', 'height=-10px, width=10px, top=10px, left=500px')
+    a = window.open(enlace+'generate-pdf/' + id_mesa + '/' + iva +  '/' + servicio + '#toolbar=0', '_blank', 'height=-10px, width=10px, top=10px, left=500px')
 
     //return false 
    // a.print()
-    setTimeout(function () {
+   /*  setTimeout(function () {
         a.close()
-    }, 8000)
+    }, 8000) */
 }
 
 function reabrirmesa(id_mesa) {
 
     $.ajax({
 
-        url: '../../reabrir-venta',
+        url: enlace+'reabrir-venta',
         data: { id_mesa: id_mesa },
         type: 'GET',
         dataType: 'json',
@@ -92,7 +103,7 @@ function reabrirmesa(id_mesa) {
                     timer: 1500
                 });
                 setTimeout(() => {
-                    location.href = ('../../venta/create/' + id_mesa);
+                    location.href = (enlace+'venta/create/' + id_mesa);
                 }, 2000);
             } else {
                 Swal.fire({
@@ -109,7 +120,7 @@ function reabrirmesa(id_mesa) {
     });
 }
 
-function cerrarVenta(id_mesa) {
+function cerrarVenta(id_mesa, id_ticket=null) {
     Swal.fire({
         title: "Seguro?",
         text: "Se cerrará la mesa número " + id_mesa,
@@ -123,8 +134,8 @@ function cerrarVenta(id_mesa) {
 
             $.ajax({
 
-                url: '../../cerrar-venta',
-                data: { id_mesa: id_mesa },
+                url: enlace+'cerrar-venta',
+                data: { id_mesa: id_mesa , id_ticket:id_ticket},
                 type: 'GET',
                 dataType: 'html',
                 success: function (data) {
@@ -136,7 +147,7 @@ function cerrarVenta(id_mesa) {
                         timer: 1500
                     });
                     setTimeout(() => {
-                        location.href = ('../../venta/create/' + id_mesa);
+                        location.href = (enlace+'venta/create/' + id_mesa);
                     }, 2000);
                 }
             });

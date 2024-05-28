@@ -23,37 +23,37 @@
         </style>
 
         <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas ">
-            
+
             <div class=" row m-1 mb-2 border">
                 <div class="col-2">
-                        MESA
+                    MESA
                 </div>
                 <div class="col-2">
-                    ESTADO 
+                    ESTADO
                 </div>
                 <div class="col-4">
                     APERTURA
                 </div>
-                
+
                 <div class="col-4">
                     CIERRE
                 </div>
             </div>
 
-            @foreach ($aperturas as $apertura)
-                <div class="accordion" id="accordionExample{{ $apertura->id_mesa.$apertura->ticket}}">
+            @forelse ($aperturas as $apertura)
+                <div class="accordion" id="accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
 
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne{{ $apertura->id_mesa.$apertura->ticket}}" aria-expanded="true"
-                                aria-controls="collapseOne{{ $apertura->id_mesa.$apertura->ticket}}">
-                                
+                                data-bs-target="#collapseOne{{ $apertura->id_mesa . $apertura->ticket }}" aria-expanded="true"
+                                aria-controls="collapseOne{{ $apertura->id_mesa . $apertura->ticket }}">
+
                                 <div class="col-2">
                                     {{ strtoupper($apertura->nombremesa) }}
                                 </div>
-                                
-                             
+
+
                                 <div class="col-2">
                                     @if ($apertura->ticket == 0)
                                         MESA ABIERTA
@@ -67,14 +67,14 @@
 
                                 <div class="col-4">
                                     @if ($apertura->cierre)
-                                    FECHA: {{ $apertura->cierre}}
+                                        FECHA: {{ $apertura->cierre }}
                                     @endif
-                                    
+
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseOne{{ $apertura->id_mesa.$apertura->ticket}}" class="accordion-collapse collapse "
-                            data-bs-parent="#accordionExample{{ $apertura->id_mesa.$apertura->ticket}}">
+                        <div id="collapseOne{{ $apertura->id_mesa . $apertura->ticket }}" class="accordion-collapse collapse "
+                            data-bs-parent="#accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
                             <div class="accordion-body">
 
 
@@ -115,7 +115,11 @@
 
 
                 </div>
-            @endforeach
+            @empty
+                <div class="col-12 p-2">
+                    No existen registros
+                </div>
+            @endforelse
 
 
 

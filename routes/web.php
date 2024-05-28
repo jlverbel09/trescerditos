@@ -49,7 +49,7 @@ Route::get('reabrir-venta', [VentaController::class, 'reabrirVenta'])->name('rea
 
 
 Route::get('logs', [LogsController::class , 'index'])->name('logs.index');
-
+Route::get('log-reabrir', [LogsController::class , 'logReabrir'])->name('logs.reabrir');
 
 
  /* 

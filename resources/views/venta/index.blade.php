@@ -131,10 +131,10 @@
             </div>
             
             <div class="col-8 text-right justify-content-end d-flex offset-4">
-                <a type="button" onclick="reabrirmesa({{request()->idmesa}})" class="btn btn-info m-1 text-white @if($mesasActivas > 0) disabled @endif">
+                {{-- <a type="button" onclick="reabrirmesa({{request()->idmesa}})" class="btn btn-info m-1 text-white @if($mesasActivas > 0) disabled @endif">
                     RE-ABRIR ULTIMO TICKET DE LA MESA <i class="fa fa-lock-open"></i>
-                </a>
-                <a type="button" onclick="cerrarVenta({{request()->idmesa}})"  class="btn btn-danger m-1 @if($total == 0) disabled @endif">
+                </a> --}}
+                <a type="button" onclick="cerrarVenta({{request()->idmesa}}, {{request()->idticket}})"  class="btn btn-danger m-1 @if($total == 0) disabled @endif">
                     CERRAR VENTA <i class="fa fa-lock"></i>
                 </a>
                 <a class="btn btn-success m-1 @if($total == 0) disabled @endif" target="_blank"

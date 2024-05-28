@@ -42,10 +42,10 @@
                     $sum = 0;
                     $ticketanterior = -1;
                 @endphp
-                @foreach ($data as $d)
+                @forelse ($data as $d)
    
                     <tr>
-                        @if ($d->ticket == $ticketanterior)
+                        @if ($d->ticket.'0'.$d->mesa == $ticketanterior)
                             @php
                                 $sum = $sum + 1;
                             @endphp
@@ -56,7 +56,7 @@
                         @else
                             @php
 
-                                $ticketanterior = $d->ticket;
+                                $ticketanterior = $d->ticket.'0'.$d->mesa;
                                 $sum = 1;
 
                             @endphp
@@ -70,7 +70,13 @@
                                         width="100px"><i class="fa fa-info"></i></button>
                                 @endif
                             </td>
-                            <td class="borde">{{ $d->ticket }}</td>
+                            <td class="borde">
+                                @if ($d->estadomesa == 0)
+                                {{ str_pad( $d->ticket, 6, '0', STR_PAD_LEFT) }}
+                                
+                                @else
+                                   -
+                                @endif
                             <td class="borde">{{ $d->mesa }}</td>
                             <td class="borde">{{ $d->estado }}</td>
                         @endif
@@ -82,7 +88,11 @@
                         <td class="borde">{{ '€' . number_format($d->precio_total, 2, ',', '.') }}</td>
                         <td class="borde">{{ $d->observacion }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="10">No existen registros</td>
+                    </tr>
+                @endforelse
 
             </table>
         </div>
