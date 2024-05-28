@@ -26,6 +26,7 @@
                             <a class="btn btn-warning btn-sm " href="{{ route('producto.edit', $producto) }}">
                                 <i class="fa fa-edit text-white"></i>
                             </a>
+                            @if(Auth::user()->rol == 1 )  
                             &nbsp;
                             <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                 @csrf @method('delete')
@@ -33,7 +34,7 @@
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
-                            
+                            @endif
                         </td>
 
                         {{-- <td>{{ $producto['id'] }}</td> --}}

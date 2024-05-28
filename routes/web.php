@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\VentaController;
@@ -47,7 +48,7 @@ Route::get('exportar-excel', [VentaController::class, 'exportarVentas'])->middle
 Route::get('reabrir-venta', [VentaController::class, 'reabrirVenta'])->name('reabrirVenta');
 
 
-
+Route::get('logs', [LogsController::class , 'index'])->name('logs.index');
 
 
 

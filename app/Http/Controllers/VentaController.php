@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Exports\VentasExport;
 use App\Http\Requests\saveVentaRequest;
+use App\Models\Log;
 use App\Models\Mesa;
 use App\Models\Producto;
 use App\Models\Ticket;
 use App\Models\Venta;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -53,6 +55,7 @@ class VentaController extends Controller
             Venta::where('estado','=',0)->where('id_mesa','=',$request->idmesa)->where('ticket','=',$request->idticket)->update(['estado' => 1]);
             Mesa::where('numero', '=', $request->idmesa)
             ->update(['estado' => 1]);
+           
         }
         $suma = Venta::select('ventas.precio_total')
             ->join('productos', 'productos.id_producto', 'ventas.id_producto')
@@ -87,6 +90,7 @@ class VentaController extends Controller
             ->join('mesas', 'mesas.numero', 'ventas.id_mesa')
             ->where('ventas.id_mesa', '=', $request->idmesa)
             ->where('ventas.estado', '=', 1)
+            ->orderBy('ventas.created_at', 'desc')
             ->get();
 
 
@@ -110,8 +114,23 @@ class VentaController extends Controller
      */
     public function store(Venta $venta, saveVentaRequest $request)
     {
+
+        $estadoInicial = Mesa::select('estado')->where('numero','=',$request->id_mesa)->get();
+        if($estadoInicial[0]->estado == 0){
+            $tiempo = strtotime('-15 minute', strtotime(date('Y-m-d ')));
+            Log::create([
+                'id_user' => Auth::user()->id,
+                'ticket' => 0,
+                'id_mesa' => $request->id_mesa,
+                'accion' => 'APERTURA MESA',
+                'descripcion' => '',
+                'created_at' => $tiempo
+            ]); 
+        }
         Mesa::where('numero', '=', $request->id_mesa)
             ->update(['estado' => 1]);
+
+        
 
         $venta->create([
             'ticket' => /* $request->ticket */ 0,
@@ -123,6 +142,17 @@ class VentaController extends Controller
             'observacion' => $request->observacion,
             'estado' => 1,
         ]);
+
+        $producto = Producto::select()->where('id_producto','=',$request->id_producto)->get();
+        $nomb1 = $producto[0]->nombre1;
+        $nomb2 = $producto[0]->nombre2;
+        Log::create([
+            'id_user' => Auth::user()->id,
+            'ticket' => 0,
+            'id_mesa' => $request->id_mesa,
+            'accion' => 'SELECCION DE PLATO',
+            'descripcion' => 'CANTIDAD: '.$request->cantidad.' - PLATO: '.$nomb1.' - '.$nomb2
+        ]); 
         return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
     }
 
@@ -181,6 +211,19 @@ class VentaController extends Controller
      */
     public function destroy(venta $venta)
     {
+        
+        $producto = Producto::select()->where('id_producto','=',$venta->id_producto)->get();
+        $nomb1 = $producto[0]->nombre1;
+        $nomb2 = $producto[0]->nombre2;
+        Log::create([
+            'id_user' => Auth::user()->id,
+            'ticket' => 0,
+            'id_mesa' => $venta->id_mesa,
+            'accion' => 'ELIMINACION DE PLATO',
+            'descripcion' => 'CANTIDAD: '.$venta->cantidad.' - PLATO: '.$nomb1.' - '.$nomb2
+        ]); 
+
+
         $venta->delete();
         return redirect()->route('venta.create.id', $venta->id_mesa)->with('status', 'Producto eliminado correctamente');
     }

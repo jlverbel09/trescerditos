@@ -8,17 +8,17 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" value="Usuario" />
-            <x-text-input id="email" class="block mt-1 w-full" type="password" name="email" :value="old('email')" required autofocus autocomplete="off"
+            {{-- <x-input-label for="email" value="Código" /> --}}
+            <x-text-input id="email" placeholder="Código de acceso" class="block mt-1 w-full" type="password" name="email" :value="old('email')" required autofocus autocomplete="off"
             spellcheck="false" onfocus="this.removeAttribute('readonly');" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" value="Contraseña" style="display:none" />
+        <div class="mt-4"  style="display:none">
+            <x-input-label for="password" value="Contraseña"  />
 
-            <x-text-input id="password" class="block mt-1 w-full" style="display:none"
+            <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password" value="123456789"
                             required autocomplete="current-password" />
@@ -41,8 +41,8 @@
                 </a>
             @endif --}}
 
-            <x-primary-button class="ms-3">
-                Ingresar
+            <x-primary-button class="ms-0 " style="width: 100%; justify-content: center" >
+                <div style="text-align:center;justify-content: center;display:flex">Ingresar</div>
             </x-primary-button>
         </div>
     </form>

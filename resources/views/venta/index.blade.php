@@ -18,7 +18,7 @@
                             <th>Comentario</th>
                             <th>Observación</th>
                             <th>Fec.&nbsp;Creación</th>
-                            <th>Fec.&nbsp;Modificación</th>
+                           {{--  <th>Fec.&nbsp;Modificación</th> --}}
     
                         </tr>
                     </thead>
@@ -58,7 +58,7 @@
                                 <td>{{ $venta['comentario'] }}</td>
                                 <td>{{ $venta['observacion'] }}</td>
                                 <td>{{ $venta['created_at'] }}</td>
-                                <td>{{ $venta['updated_at'] }}</td>
+                                {{-- <td>{{ $venta['updated_at'] }}</td> --}}
     
                             </tr>
                         @empty
