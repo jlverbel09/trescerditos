@@ -1,10 +1,10 @@
 <div class="row">
-
+ 
     <div class="col-12 mt-2">
         <label for="ticket">Ticket</label>
         <input type="text" readonly placeholder="Ticket" name="ticket" id="ticket"
             class="form-control form-control-sm shadown-sm @error('ticket') is-invalid   @enderror"
-            value="@if (!empty($venta->ticket)) {{ old('ticket', str_pad($venta->ticket, 6, '0', STR_PAD_LEFT) ) }} @else {{ str_pad($ticket, 6, '0', STR_PAD_LEFT) }} @endif">
+            value="@if (!empty($venta->ticket)) {{ old('ticket', str_pad($venta->ticket, 6, '0', STR_PAD_LEFT)) }} @else {{ str_pad($ticket, 6, '0', STR_PAD_LEFT) }} @endif">
         @error('ticket')
             <span class="invalid-feedback">
                 <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
             class="form-control form-control-sm shadown-sm @error('id_mesa') is-invalid   @enderror">
             <option value="">Seleccionar</option>
             @foreach ($mesas as $mesa)
-                <option value="{{ $mesa->numero }}" @if ( (in_array($mesa->numero, $mesaSelect))or ($mesa->numero == request()->idmesa)) selected @endif>
+                <option value="{{ $mesa->numero }}" @if (in_array($mesa->numero, $mesaSelect) or $mesa->numero == request()->idmesa) selected @endif>
                     {{ $mesa->numero }} {{ $mesa->descripcion }}</option>
             @endforeach
         </select>
@@ -34,8 +34,8 @@
 
     <div class="col-12 mt-2">
         <label for="id_producto" style="width: 100%">Producto</label>
-        <select name="id_producto" style="width: 100%" class="select2" id="id_producto" onchange="calcularVenta()" autofocus
-            class="form-control form-control-sm shadown-sm @error('id_producto') is-invalid   @enderror">
+        <select name="id_producto" style="width: 100%" class="select2" id="id_producto" onchange="calcularVenta()"
+            autofocus class="form-control form-control-sm shadown-sm @error('id_producto') is-invalid   @enderror">
             <option value="">Seleccionar</option>
             @foreach ($listProducto as $producto)
                 <option value="{{ $producto->id_producto }}" @if (in_array($producto->id_producto, $ventaSelect)) selected @endif>
@@ -49,19 +49,33 @@
         @enderror
     </div>
 
-    
+
     {{-- $venta->cantidad --}}
 
-    <div class="col-12 mt-2">
+    <div class="col-12 row p-0 m-0 mt-2">
         <label for="cantidad">Cantidad</label>
-        <input type="number" onkeyup="calcularVenta()" placeholder="Cantidad" name="cantidad" id="cantidad"
-            class="form-control form-control-sm shadown-sm @error('cantidad') is-invalid   @enderror"
-            value="{{ old('cantidad',1 ) }}">
-        @error('cantidad')
-            <span class="invalid-feedback">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+        <div class="col-4 pr-0">
+            <button type="button" class="btn btn-danger w-100" onclick="calcularcantidad('-')">-</button>
+        </div>
+        <div class="col-4 p-0">
+            <input type="number" style="font-size:18px" onkeyup="calcularVenta()" placeholder="Cantidad" name="cantidad" id="cantidad"
+                class="form-control m-0 h-100 text-center form-control-sm shadown-sm @error('cantidad') is-invalid   @enderror"
+                value="{{ old('cantidad', 1) }}">
+            @error('cantidad')
+                <span class="invalid-feedback">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="col-4 pr-0">
+            <button type="button" class="btn btn-success m-0  w-100" onclick="calcularcantidad('+')">+</button>
+        </div>
+    </div>
+  
+
+    <div class="col-12 mt-2">
+
+
     </div>
 
 
@@ -109,7 +123,7 @@
 
 </div>
 
-    
+
 <script>
     $('.select2').select2();
 </script>

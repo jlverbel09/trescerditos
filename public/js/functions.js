@@ -155,3 +155,18 @@ function cerrarVenta(id_mesa, id_ticket=null) {
     });
 }
 
+function calcularcantidad(signo){
+    var valor = $('#cantidad').val()
+    if(signo == '-'){
+        valor = parseInt(valor) - parseInt(1);
+    }
+    if(signo == '+'){
+        valor = parseInt(valor) + parseInt(1);
+    }
+    if(valor < 0){
+        valor = 0;    
+    }
+    $('#cantidad').val(valor)
+    return false
+}
+

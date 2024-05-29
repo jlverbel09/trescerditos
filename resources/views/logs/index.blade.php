@@ -6,11 +6,11 @@
             <h2>{{ $titleform }}</h2>
         </div>
         <div class="col-4 col-xl-1 text-center justify-content-center d-flex align-items-center">
-            @if (Auth::user()->rol == 1)
+           {{--  @if (Auth::user()->rol == 1)
                 <a href="{{ route('ventas-cerradas-excel') }}" title="Exportar" style="text-decoration:none">
                     <i class="fa fa-file-excel text-success" style="font-size: 30px"></i> Exportar
                 </a>
-            @endif
+            @endif --}}
         </div>
         <style>
             td {
@@ -22,7 +22,7 @@
             }
         </style>
 
-        <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas ">
+        <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas text-white ">
 
             <div class=" row m-1 mb-2 border">
                 <div class="col-2">

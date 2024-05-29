@@ -145,7 +145,7 @@ class VentaController extends Controller
 
         $estadoInicial = Mesa::select('estado')->where('numero', '=', $request->id_mesa)->get();
         if ($estadoInicial[0]->estado == 0) {
-            $tiempo = strtotime('-1 minute', strtotime(date('Y-m-d h:i:s')));
+            $tiempo = strtotime('-1 minute', strtotime(date('Y-m-d H:i:s')));
             Log::create([
                 'id_user' => Auth::user()->id,
                 'ticket' => 0,

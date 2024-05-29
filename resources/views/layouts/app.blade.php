@@ -46,7 +46,7 @@
     <link rel="shortcut icon" href="../../dist/img/logo.png" type="image/x-icon" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tres Cerditos - {{ config('app.name', 'Inicio') }}</title>
+    <title>Tres Cerditos - {{-- {{ config('app.name', 'Inicio') }} --}}</title>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -63,6 +63,11 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
 
+    <style>
+       /*  * {
+            font-size: 15px;
+        } */
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -71,7 +76,7 @@
         @include('layouts.control')
         @include('layouts.footer')
     </main>
-  
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
 </body>
