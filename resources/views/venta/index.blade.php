@@ -12,7 +12,7 @@
                             <th>Mesa&nbsp;&nbsp;&nbsp;</th>
                             <th>Nombre&nbsp;1</th>
                             <th>Nombre&nbsp;2</th>
-                            <th class="text-center">cantidad</th>
+                            <th class="text-center">Cantidad</th>
                             <th>Precio&nbsp;Unitario&nbsp;&nbsp;&nbsp;</th>
                             <th>Precio&nbsp;Total&nbsp;&nbsp;&nbsp;</th>
                             <th>Comentario</th>
@@ -108,21 +108,37 @@
                     </thead>
                 </table>
             </div>
-            <div class="col-8 text-right ">
+            <div class="col-4 text-right ">
                 {{--  <a href=""  class="btn btn-danger m-1">
                 CERRAR VENTA
             </a> --}}
             </div>
-            <div class="col-4 ">
+            <div class="col-8 ">
                 <table class="table table-bordered border-1 table-sm  table-responsive text-center">
                     <thead class="thead">
                         <tr>
-                            <td width="60%">
+                            <td width="10%">
                                 <b>TOTAL</b>
                             </td>
-    
-                            <td width="40%" id="totalFinal">
+                            <input type="hidden" id="valorTotalFinal" value="{{$total - $pagado}}">
+                            <input type="hidden" id="campopagado" value="{{$pagado}}">
+                            <td width="20%" id="totalFinal">
                                 {{ '€' . number_format($total, 2, ',', '.') }}
+                               
+                            </td>
+
+                            <td width="10%" >
+                                <b>PAGADO</b>
+                            </td>
+                            <td width="20%"  id="pagado">
+                                {{ '€' . number_format($pagado, 2, ',', '.') }}
+                            </td>
+
+                            <td width="10%" >
+                                <b>RESTANTE</b>
+                            </td>
+                            <td width="20%" id="campopagado_" >
+                                {{ '€' . number_format($total - $pagado, 2, ',', '.') }}
                             </td>
     
                         </tr>
@@ -143,7 +159,7 @@
                 </a>
             </div>
     
-    
+            
         </div>
     </div>
 

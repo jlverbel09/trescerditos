@@ -52,6 +52,8 @@ Route::get('logs', [LogsController::class , 'index'])->name('logs.index');
 Route::get('log-reabrir', [LogsController::class , 'logReabrir'])->name('logs.reabrir');
 
 
+Route::get('pagar',[VentaController::class, 'pagar'])->name('ventas.pagar');
+
  /* 
 
 Route::get('/index', [VentaController::class, 'create'])->name('venta.create.index'); */

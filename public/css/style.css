@@ -133,3 +133,15 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input[type=number] { -moz-appearance:textfield; }
+
+
+.botones{
+    height: 100px;
+    font-size: 25px;
+    width: 100px;
+}
+.contenedorValor{
+    height: 50px;
+    font-size: 40px;
+    text-align: right;
+}

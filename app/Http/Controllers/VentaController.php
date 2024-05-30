@@ -6,6 +6,7 @@ use App\Exports\VentasExport;
 use App\Http\Requests\saveVentaRequest;
 use App\Models\Log;
 use App\Models\Mesa;
+use App\Models\Pagos;
 use App\Models\Producto;
 use App\Models\Ticket;
 use App\Models\Venta;
@@ -112,6 +113,13 @@ class VentaController extends Controller
         }
 
 
+        $pago = Pagos::select(DB::raw('(sum(valor)) as pagado'))->where('id_mesa','=',$request->idmesa)->where('ticket','=',$carga_ticket)->get();
+        if($pago[0]->pagado){
+            $valorpago = $pago[0]->pagado;
+        }else{
+            $valorpago = 0;
+        }
+        
 
         return view('venta.create', [
             'mesaSelect' => [],
@@ -124,7 +132,8 @@ class VentaController extends Controller
             'listProducto' => $listProductos,
             'venta' => new Venta(),
             'ventaSelect' => [],
-            'mesasActivas' => $mesasActivas
+            'mesasActivas' => $mesasActivas,
+            'pagado' => $valorpago
         ]);
     }
 
@@ -317,6 +326,19 @@ class VentaController extends Controller
             return true;
         }
         return 0;
+    }
+
+    public function pagar(Request $request){
+       
+        Pagos::create([
+            'id_mesa' => $request->id_mesa,
+            'tipo_pago' => $request->tipo_pago,
+            'valor' => $request->valor,
+            'ticket' => $request->ticket,
+            'id_user' => Auth::user()->id
+        ]);
+       
+        return $request;
     }
 
     public function exportarVentas()
