@@ -31,17 +31,17 @@ function calcularVenta() {
 function adicionarServicio(total, servicio = 0) {
     var checkbox = $('#checkiva')
     var pagado = $('#campopagado').val()
-    
+
     if (checkbox.is(':checked')) {
         $('#totalFinal').html('€' + (parseFloat(total) + parseFloat(servicio)))
         $('#campopagado_').html('€' + (parseFloat(total) + parseFloat(servicio) - parseFloat(pagado)))
         $('#ivatext').val(servicio)
-        $('#valorTotalFinal').val( (parseFloat(total) + parseFloat(servicio) - parseFloat(pagado)))
+        $('#valorTotalFinal').val((parseFloat(total) + parseFloat(servicio) - parseFloat(pagado)))
     } else {
         $('#totalFinal').html('€' + (parseFloat(total)))
         $('#campopagado_').html('€' + (parseFloat(total) - parseFloat(pagado)))
         $('#ivatext').val(0)
-        $('#valorTotalFinal').val( (parseFloat(total) - parseFloat(pagado)))
+        $('#valorTotalFinal').val((parseFloat(total) - parseFloat(pagado)))
 
     }
 }
@@ -207,14 +207,13 @@ function btnCompletado() {
         valorFinal = contenedorValor
     }
 
-    console.log(valorFinal);
-
     $('#valorFinal').val(valorFinal)
 }
 
 
 async function pagar() {
     var valor = $('#valorFinal').val();
+
     $('#contenedorValor').val(valor)
 
     var id_mesa = $('#id_mesa').val();
@@ -244,8 +243,8 @@ async function pagar() {
                     data: { id_mesa: id_mesa, id_ticket: ticket },
                     type: 'GET',
                     dataType: 'html',
-                    success:  function (data) {
-                       
+                    success: function (data) {
+
 
                         Swal.fire({
                             title: "Devolucion de €" + (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))),
@@ -262,7 +261,7 @@ async function pagar() {
                 });
 
 
-                
+
             } else if (valor == valorTotalFinal) {
 
                 $.ajax({
@@ -271,23 +270,23 @@ async function pagar() {
                     data: { id_mesa: id_mesa, id_ticket: ticket },
                     type: 'GET',
                     dataType: 'html',
-                    success:  function (data) {
-                       
+                    success: function (data) {
+
                         Swal.fire({
                             title: "Pago completo de €" + (Math.abs(parseFloat(valorTotalFinal))),
-                            text:  "Mesa " + id_mesa + " cerrada correctamente",
+                            text: "Mesa " + id_mesa + " cerrada correctamente",
                             icon: "success",
                             showConfirmButton: false,
                             timer: 5000
                         })
-                        
+
                         setTimeout(() => {
                             location.href = (enlace + 'venta/create/' + id_mesa);
                         }, 5000);
                     }
                 });
-                 
-               
+
+
             } else if (valor < valorTotalFinal) {
                 Swal.fire({
                     title: "Alerta!",
@@ -295,7 +294,7 @@ async function pagar() {
                     icon: "warning"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location.href = (enlace + 'venta/create/' + id_mesa);
+                        location.href = (enlace + 'venta/create/' + id_mesa + '/' + ticket)
                     }
                 })
             }

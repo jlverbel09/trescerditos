@@ -46,7 +46,7 @@
     <link rel="shortcut icon" href="../../dist/img/logo.png" type="image/x-icon" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tres Cerditos - {{-- {{ config('app.name', 'Inicio') }} --}}</title>
+    <title>Tres Cerditos {{-- {{ config('app.name', 'Inicio') }} --}}</title>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">

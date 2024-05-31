@@ -1,5 +1,8 @@
+{{-- @if (!empty($venta->ticket)) {{ old('ticket', $venta->ticket) }} @else {{$ticket}} @endif --}}
+
 <div class="row">
- <input type="hidden" name="_ticket" id="_ticket" value="@if (!empty($venta->ticket)) {{ old('ticket', $venta->ticket) }} @else {{ $ticket }} @endif">
+    <input type="hidden" name="_ticket" id="_ticket"
+        value="{{$ticket}}">
     <div class="col-12 mt-2">
         <label for="ticket">Ticket</label>
         <input type="text" readonly placeholder="Ticket" name="ticket" id="ticket"
@@ -16,7 +19,7 @@
     <div class="col-12 mt-2">
         <label for="id_mesa">Mesa</label>
         <select name="id_mesa" id="id_mesa"
-            class="form-control form-control-sm shadown-sm @error('id_mesa') is-invalid   @enderror">
+            class="form-control form-control-sm shadown-sm selectMesa @error('id_mesa') is-invalid   @enderror">
             <option value="">Seleccionar</option>
             @foreach ($mesas as $mesa)
                 <option value="{{ $mesa->numero }}" @if (in_array($mesa->numero, $mesaSelect) or $mesa->numero == request()->idmesa) selected @endif>
@@ -55,10 +58,12 @@
     <div class="col-12 row p-0 m-0 mt-2">
         <label for="cantidad">Cantidad</label>
         <div class="col-4 pr-0">
-            <button type="button" class="btn btn-danger w-100" onclick="calcularcantidad('-');calcularVenta()">-</button>
+            <button type="button" class="btn btn-primary w-100"
+                onclick="calcularcantidad('-');calcularVenta()">-</button>
         </div>
         <div class="col-4 p-0">
-            <input type="number" style="font-size:18px" onkeyup="calcularVenta()" placeholder="Cantidad" name="cantidad" id="cantidad"
+            <input type="number" style="font-size:18px" onkeyup="calcularVenta()" placeholder="Cantidad"
+                name="cantidad" id="cantidad"
                 class="form-control m-0 h-100 text-center form-control-sm shadown-sm @error('cantidad') is-invalid   @enderror"
                 value="{{ old('cantidad', 1) }}">
             @error('cantidad')
@@ -68,10 +73,11 @@
             @enderror
         </div>
         <div class="col-4 pr-0">
-            <button type="button" class="btn btn-success m-0  w-100" onclick="calcularcantidad('+');calcularVenta()">+</button>
+            <button type="button" class="btn btn-primary m-0  w-100"
+                onclick="calcularcantidad('+');calcularVenta()">+</button>
         </div>
     </div>
-  
+
 
     <div class="col-12 mt-2">
 

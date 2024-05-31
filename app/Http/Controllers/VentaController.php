@@ -71,8 +71,6 @@ class VentaController extends Controller
 
         $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
 
-
-
         $mesas = Mesa::select('mesas.id','numero','descripcion','ventas.estado',DB::raw('max(ventas.ticket) as ticket'))
         ->leftJoin('ventas',function( $join){
             $join->on('ventas.id_mesa','=','mesas.numero');
@@ -124,7 +122,7 @@ class VentaController extends Controller
         return view('venta.create', [
             'mesaSelect' => [],
             'mesas' => $mesas,
-            'ticket' => $carga_ticket,
+            'ticket' =>$carga_ticket,
             'data' => $list,
             'iva' => $suma * 10 / 100,
             'servicio' => $suma * 10 / 100,
@@ -143,8 +141,9 @@ class VentaController extends Controller
     public function store(Venta $venta, saveVentaRequest $request)
     {
 
-        $verif_ticket = Ticket::select('*')->where('ticket', '=', $request->ticket)->get();
-        
+
+        $verif_ticket = Venta::select('ticket')->where('ticket', '=', $request->ticket)->groupBy('ticket')->get();
+    
 
         if(!empty($verif_ticket[0]->ticket)){
             $nro_ticket = $verif_ticket[0]->ticket;
