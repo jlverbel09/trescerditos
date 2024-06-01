@@ -3,13 +3,13 @@
 
         <div class="row ">
             <div class="col-12 scroll table-ventas" {{-- style="overflow: scroll" --}}>
-                <table class="table table-bordered border-1 table-sm  table-responsive " >
+                <table class="table table-dark table-bordered border-1 table-sm  table-responsive " >
                     <thead class="thead">
                         <tr>
                             <th class="text-center">Acciones</th>
                             {{-- <th>ID</th> --}}
                             <th>ID.&nbsp;Producto</th>
-                            <th>Mesa&nbsp;&nbsp;&nbsp;</th>
+                            {{-- <th>Mesa&nbsp;&nbsp;&nbsp;</th> --}}
                             <th>Nombre&nbsp;1</th>
                             <th>Nombre&nbsp;2</th>
                             <th class="text-center">Cantidad</th>
@@ -49,7 +49,7 @@
     
                                 {{-- <td>{{ $venta['id'] }}</td> --}}
                                 <td>{{ $venta['id_producto'] }}</td>
-                                <td>{{ $venta['mesa'] }}</td>
+                               {{--  <td>{{ $venta['mesa'] }}</td> --}}
                                 <td>{{ $venta['nombre1'] }}</td>
                                 <td>{{ $venta['nombre2'] }}</td>
                                 <td class="text-center">{{ $venta['cantidad'] }}</td>
@@ -84,7 +84,7 @@
                 <hr>
             </div>
             <div class="col-12">
-                <table class="table table-bordered border-1 table-sm  table-responsive text-center text-center">
+                <table class="table table-dark table-bordered border-1 table-sm  table-responsive text-center text-center">
                     <thead class="thead">
                         <tr>
                             <td width="30%">
@@ -114,7 +114,7 @@
             </a> --}}
             </div>
             <div class="col-8 ">
-                <table class="table table-bordered border-1 table-sm  table-responsive text-center">
+                <table class="table table-dark table-bordered border-1 table-sm  table-responsive text-center">
                     <thead class="thead">
                         <tr>
                             <td width="10%">

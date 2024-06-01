@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Empanadería tres cerditos</title>
+    <title>Tres cerditos</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,8 +19,10 @@
 
 <body class="font-sans text-gray-900 antialiased " style="background-image: url('https://www.todofondos.net/wp-content/uploads/1920x1080-Fondo-de-pantalla-hexadecimal-negro.jpg');background-size:cover">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black   ">
-        <div class="fondos" style="opacity: 0.1">
-            <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipPprc1vuwoydBuYWe8dpSItwlermVlaXGLxqnAq=s1360-w1360-h1020-rw)"></div>
+        <div class="fondos" style="">
+            
+            <div class="fondo2" style="background-image: url({{ asset('img/fondo.png') }}) ; "></div>
+            {{-- <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipPprc1vuwoydBuYWe8dpSItwlermVlaXGLxqnAq=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipP_bWkQu98SRvQSAZ2S9JB7AizyTOkZLPR57Z8u=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipNSSXDs68LSfAXSJ7vtFVrfvIIAPrDRZ3dwFXsx=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipMG-L5eKtExGGo0HzRKIJ5txlcOV6WsbBsUChKO=s1360-w1360-h1020-rw)"></div>
@@ -45,9 +47,9 @@
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipMG-L5eKtExGGo0HzRKIJ5txlcOV6WsbBsUChKO=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipNpYdB_MnFtd6JFfK30KKyrPfXdzP_hUb2yhgKl=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipPJnMTqpidd0fhwADtYlABrc0oy8RxpuuAsPPlX=s1360-w1360-h1020-rw)"></div>
-        
+         --}}
         </div>
-        <div class="divencima"></div>   
+       {{--  <div class="divencima"></div>   --}} 
      
         <div
             class="w-full sm:max-w-md mt-6 mb-5 px-6 py-4  border shadow-md overflow-hidden sm:rounded-lg" style="background-color: #242526">

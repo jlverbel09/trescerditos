@@ -25,6 +25,9 @@
         <li class="nav-item  d-sm-inline-block     ">
             <a href="{{ route('logs.index') }}"   class="nav-link  p-2   @if(Route::currentRouteName()== 'logs.index') bg-primary @else text-light bg-secondary @endif">Logs</a>
         </li>
+        <li class="nav-item  d-sm-inline-block     ">
+            <a href="{{ route('pagos.index') }}"   class="nav-link  p-2   @if(Route::currentRouteName()== 'pagos.index') bg-primary @else text-light bg-secondary @endif">Pagos</a>
+        </li>
         
     </ul>
     @include('layouts.header-section')

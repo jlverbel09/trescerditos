@@ -12,15 +12,7 @@
                 </a>
             @endif --}}
         </div>
-        <style>
-            td {
-                border: none
-            }
-
-            td.borde {
-                border-top: 1px solid white
-            }
-        </style>
+    
 
         <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas text-white ">
 
@@ -41,9 +33,9 @@
             </div>
 
             @forelse ($aperturas as $apertura)
-                <div class="accordion" id="accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
+                <div class="accordion my-2" id="accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
 
-                    <div class="accordion-item">
+                    <div class="accordion-item bg-transparent">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseOne{{ $apertura->id_mesa . $apertura->ticket }}" aria-expanded="true"
@@ -75,11 +67,11 @@
                         </h2>
                         <div id="collapseOne{{ $apertura->id_mesa . $apertura->ticket }}" class="accordion-collapse collapse "
                             data-bs-parent="#accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
-                            <div class="accordion-body">
+                            <div class="accordion-body m-0 ">
 
 
 
-                                <table class="table " border="0">
+                                <table class="table  table-bordered table-dark" border="0">
                                     <tr>
                                         <th><b>Fecha</b></th>
                                         <th><b>Usuario</b></th>

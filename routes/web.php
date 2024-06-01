@@ -1,21 +1,14 @@
 <?php
 
 use App\Http\Controllers\LogsController;
+use App\Http\Controllers\PagosController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProfileController;
-/* Route::get('/', function () {
-    return view('welcome');
-});
- */
 
-/*  Route::get('/', function () {
-    return view('welcome');
-});
- */
 
 
 
@@ -43,6 +36,7 @@ Route::get('cerrar-venta', [PDFController::class, 'cerrarVenta'])->middleware(['
 
 Route::get('ventas-cerradas',[VentaController::class, 'ventasCerradas'])->middleware(['auth', 'verified'])->name('ventas-cerradas.index');
 Route::get('exportar-excel', [VentaController::class, 'exportarVentas'])->middleware(['auth', 'verified'])->name('ventas-cerradas-excel');
+Route::get('exportar-excel-pagos', [PagosController::class, 'exportarPagos'])->middleware(['auth', 'verified'])->name('pagos-excel');
 
 
 Route::get('reabrir-venta', [VentaController::class, 'reabrirVenta'])->name('reabrirVenta');
@@ -54,9 +48,14 @@ Route::get('log-reabrir', [LogsController::class , 'logReabrir'])->name('logs.re
 
 Route::get('pagar',[VentaController::class, 'pagar'])->name('ventas.pagar');
 
- /* 
+Route::get('pagos',[PagosController::class, 'index'])->name('pagos.index');
 
-Route::get('/index', [VentaController::class, 'create'])->name('venta.create.index'); */
+
+/* ------------------------------------------------------------------------------------------- */
+
+
+
+
 
 Route::get('/',[VentaController::class, 'create'])->middleware(['auth', 'verified'])->name('venta.create.index');
 Route::get('/dashboard',[VentaController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard');

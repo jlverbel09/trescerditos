@@ -3,17 +3,17 @@
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header dark text-white">
                 <h1 class="modal-title fs-5" id="tipopago"></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body dark">
                 <div class="row m-0 p-0">
                     <div class="col-12 mb-2">
                         <input type="hidden" id="tpago" value="0">
                         <input type="hidden" id="valorFinal" value="0">
                         <input type="text" id="contenedorValor" 
-                            class="form-control contenedorValor" value=""></div>
+                            class="form-control contenedorValor dark" value=""></div>
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
                             onclick="pintarNumero('1'); btnCompletado()">1</div>
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"

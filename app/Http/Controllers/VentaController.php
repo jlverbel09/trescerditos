@@ -53,7 +53,7 @@ class VentaController extends Controller
      */
     public function create(Venta $venta, Request $request)
     {
-        
+
         if (!empty($request->idticket)) {
             Venta::where('estado', '=', 0)->where('id_mesa', '=', $request->idmesa)->where('ticket', '=', $request->idticket)->update(['estado' => 1]);
             Mesa::where('numero', '=', $request->idmesa)
@@ -71,15 +71,15 @@ class VentaController extends Controller
 
         $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
 
-        $mesas = Mesa::select('mesas.id','numero','descripcion','ventas.estado',DB::raw('max(ventas.ticket) as ticket'))
-        ->leftJoin('ventas',function( $join){
-            $join->on('ventas.id_mesa','=','mesas.numero');
-            $join->where('ventas.estado','=',1);
-            //$join->where('ventas.ticket','!=',0);
-        })
-        ->groupBy('mesas.id','numero','descripcion','ventas.estado')
-        ->orderBy('numero')
-        ->get();
+        $mesas = Mesa::select('mesas.id', 'numero', 'descripcion', 'ventas.estado', DB::raw('max(ventas.ticket) as ticket'))
+            ->leftJoin('ventas', function ($join) {
+                $join->on('ventas.id_mesa', '=', 'mesas.numero');
+                $join->where('ventas.estado', '=', 1);
+                //$join->where('ventas.ticket','!=',0);
+            })
+            ->groupBy('mesas.id', 'numero', 'descripcion', 'ventas.estado')
+            ->orderBy('numero')
+            ->get();
 
         $listProductos = Producto::get();
         $list = Venta::select(
@@ -107,22 +107,22 @@ class VentaController extends Controller
         if (!empty($request->idticket)) {
             $carga_ticket = $request->idticket;
         } else {
-            $carga_ticket = $ticket[0]['ticket'].'0'.$request->idmesa;
+            $carga_ticket = $ticket[0]['ticket'] . '0' . $request->idmesa;
         }
 
 
-        $pago = Pagos::select(DB::raw('(sum(valor)) as pagado'))->where('id_mesa','=',$request->idmesa)->where('ticket','=',$carga_ticket)->get();
-        if($pago[0]->pagado){
+        $pago = Pagos::select(DB::raw('(sum(valor)) as pagado'))->where('id_mesa', '=', $request->idmesa)->where('ticket', '=', $carga_ticket)->get();
+        if ($pago[0]->pagado) {
             $valorpago = $pago[0]->pagado;
-        }else{
+        } else {
             $valorpago = 0;
         }
-        
+
 
         return view('venta.create', [
             'mesaSelect' => [],
             'mesas' => $mesas,
-            'ticket' =>$carga_ticket,
+            'ticket' => $carga_ticket,
             'data' => $list,
             'iva' => $suma * 10 / 100,
             'servicio' => $suma * 10 / 100,
@@ -143,11 +143,11 @@ class VentaController extends Controller
 
 
         $verif_ticket = Venta::select('ticket')->where('ticket', '=', $request->ticket)->groupBy('ticket')->get();
-    
 
-        if(!empty($verif_ticket[0]->ticket)){
+
+        if (!empty($verif_ticket[0]->ticket)) {
             $nro_ticket = $verif_ticket[0]->ticket;
-        }else{
+        } else {
             $nro_ticket = 0;
         }
 
@@ -192,9 +192,9 @@ class VentaController extends Controller
             'descripcion' => 'CANTIDAD: ' . $request->cantidad . ' - PLATO: ' . $nomb1 . ' - ' . $nomb2
         ]);
 
-        if(!empty($verif_ticket[0]->ticket)){
-            return redirect()->route('venta.create.id.ticket', [$request->id_mesa,$nro_ticket])->with('status', 'Datos de venta registrado correctamente');
-        }else{
+        if (!empty($verif_ticket[0]->ticket)) {
+            return redirect()->route('venta.create.id.ticket', [$request->id_mesa, $nro_ticket])->with('status', 'Datos de venta registrado correctamente');
+        } else {
             return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
         }
     }
@@ -327,16 +327,18 @@ class VentaController extends Controller
         return 0;
     }
 
-    public function pagar(Request $request){
-       
+    public function pagar(Request $request)
+    {
+
         Pagos::create([
             'id_mesa' => $request->id_mesa,
             'tipo_pago' => $request->tipo_pago,
             'valor' => $request->valor,
             'ticket' => $request->ticket,
+            'devolucion' => $request->devolucion,
             'id_user' => Auth::user()->id
         ]);
-       
+
         return $request;
     }
 

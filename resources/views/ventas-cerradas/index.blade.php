@@ -18,12 +18,12 @@
             }
 
             td.borde {
-                border-top: 1px solid white
+                border-top: 1px solid #383d3f
             }
         </style>
 
         <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas ">
-            <table class="table " border="0">
+            <table class="table table-dark "style="border: 1px solid #383d3f"  border="0">
                 <tr>
                     <th class="text-center"><b>Reabrir</b></th>
                     <th><b>Ticket</b></th>

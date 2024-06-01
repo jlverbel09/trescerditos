@@ -16,7 +16,7 @@ function calcularVenta() {
         data: { id_producto: id_producto },
         type: 'GET',
         dataType: 'json',
-        success: function (data) {
+        success: async function (data) {
             $('#precio').val(data)
             var cantidad = $('#cantidad').val();
 
@@ -24,9 +24,21 @@ function calcularVenta() {
                 var precioTotal = data * cantidad
                 $('#precio_total').val(precioTotal)
             }
+
+
+            await guardarVenta()
         }
     });
 }
+
+
+$(document).on('keypress', function (e) {
+    if (e.which == 13) {
+        alert('You pressed enter!');
+    }
+});
+
+
 
 function adicionarServicio(total, servicio = 0) {
     var checkbox = $('#checkiva')
@@ -225,14 +237,17 @@ async function pagar() {
     var valor = parseFloat(valor)
     var valorTotalFinal = parseFloat(valorTotalFinal)
 
+    var devolucion = 0;
+    if (valor > valorTotalFinal) {
+        devolucion = (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))).toFixed(2);
+    }
+
     $.ajax({
         url: enlace + 'pagar',
-        data: { valor: valor, id_mesa: id_mesa, ticket: ticket, tipo_pago: tipo_pago },
+        data: { valor: valor, id_mesa: id_mesa, ticket: ticket, tipo_pago: tipo_pago, devolucion: devolucion },
         type: 'GET',
         dataType: 'json',
         success: await function (data) {
-
-
 
 
             if (valor > valorTotalFinal) {
@@ -246,15 +261,18 @@ async function pagar() {
                     success: function (data) {
 
 
+                        
                         Swal.fire({
-                            title: "Devolucion de €" + (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))),
+                            title: "Devolucion de €" + (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))).toFixed(2),
                             text: "Mesa " + id_mesa + " cerrada correctamente",
                             icon: "warning",
-                            showConfirmButton: true,
+                            showConfirmButton: false,
+                            timer: 5000
+
                         }).then((result) => {
-                            if (result.isConfirmed) {
+                           
                                 location.href = (enlace + 'venta/create/' + id_mesa);
-                            }
+                            
                         })
 
                     }
@@ -290,12 +308,14 @@ async function pagar() {
             } else if (valor < valorTotalFinal) {
                 Swal.fire({
                     title: "Alerta!",
-                    text: "Se ha generado un abono, restan €" + (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))),
-                    icon: "warning"
+                    text: "Se ha generado un abono, restan €" + (Math.abs(parseFloat(valor) - parseFloat(valorTotalFinal))).toFixed(2),
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 3000
                 }).then((result) => {
-                    if (result.isConfirmed) {
+                    
                         location.href = (enlace + 'venta/create/' + id_mesa + '/' + ticket)
-                    }
+                    
                 })
             }
 

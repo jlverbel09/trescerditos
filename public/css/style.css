@@ -89,6 +89,14 @@ body .navbar {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.fondo2 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 10;
+}
 
 .divencima {
     width: 100%;
@@ -148,4 +156,34 @@ input[type=number] { -moz-appearance:textfield; }
 
 .selectMesa{
     pointer-events: none;
+}
+
+
+/* ------------- Ajustes Dark*/
+
+.dark{
+    background-color: #181a1b;
+    border-color: #383d3f;
+    color: #fff;
+}
+.dark::placeholder{
+    color: #ffffff65;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #181a1b;
+    border-color: #383d3f;
+    color: #fff;    
+}
+td{
+    background-color: #181a1b ;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    color: #fff;
+}
+
+
+a.btn-warning{
+    background-color: #ff8d00d1;
+    color: #fff;
 }

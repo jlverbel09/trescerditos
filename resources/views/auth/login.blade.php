@@ -9,7 +9,7 @@
         <!-- Email Address -->
         <div>
             {{-- <x-input-label for="email" value="Código" /> --}}
-            <x-text-input id="email" placeholder="Código de acceso" class="block mt-1 w-full" type="password" name="email" :value="old('email')" required autofocus autocomplete="off"
+            <x-text-input id="email" placeholder="Código de acceso" class="block mt-1 w-full text-white" type="password" name="email" :value="old('email')" required autofocus autocomplete="off"
             spellcheck="false" onfocus="this.removeAttribute('readonly');" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
