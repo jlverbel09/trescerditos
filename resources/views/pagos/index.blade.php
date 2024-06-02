@@ -29,7 +29,9 @@
                     <th><b>Mesa</b></th>
                     <th><b>Tipo Pago</b></th>
                     <th><b>Id pago</b></th>
-                    <th><b>Total</b></th>
+                    <th><b>Pagado</b></th>
+                    <th><b>Devolución</b></th>
+                    <th><b>Recaudado</b></th>
                     <th><b>Usuario Reg.</b></th>
                     <th><b>Fecha Reg.</b></th>
                 </tr>
@@ -37,8 +39,15 @@
                 @php
                     $sum = 0;
                     $ticketanterior = -1;
+                    $sum_pagado = 0;
+                    $sum_devolucion = 0;
+                    $sum_total = 0;
                 @endphp
                 @forelse ($data as $d)
+                    @php
+                        $sum_pagado = $sum_pagado + $d->valor;
+                        $sum_devolucion = $sum_devolucion + $d->devolucion;
+                    @endphp
                     <tr>
                         @if ($d->ticket . '0' . $d->mesa == $ticketanterior)
                             @php
@@ -60,6 +69,8 @@
                         <td class="borde">{{ $d->tipopago }}</td>
                         <td class="borde">{{ str_pad($d->id, 6, '0', STR_PAD_LEFT) }}</td>
                         <td class="borde">{{ '€' . number_format($d->total, 2, ',', '.') }}</td>
+                        <td class="borde">{{ '€' . number_format($d->devolucion, 2, ',', '.') }}</td>
+                        <td class="borde">{{ '€' . number_format($d->total - $d->devolucion, 2, ',', '.') }}</td>
                         <td class="borde">{{ strtoupper($d->name) }}</td>
                         <td class="borde">{{ $d->created_at }}</td>
                     </tr>
@@ -69,6 +80,23 @@
                     </tr>
                 @endforelse
 
+            </table>
+        </div>
+        <div class="col-12">
+            <table class="text-white table table-dark table-bordered">
+                <tr>
+                    <td class="borde">
+                        <b>PAGADO: {{ '€' . number_format($sum_pagado, 2, ',', '.') }}</b>
+                    </td>
+                    <td class="borde">
+                        <b>DEVOLUCION: {{ '€' . number_format($sum_devolucion, 2, ',', '.') }}</b>
+                    </td>
+                    <td class="borde">
+                        <b>
+                            RECAUDADO: {{ '€' . number_format($sum_pagado - $sum_devolucion, 2, ',', '.') }}
+                        </b>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>

@@ -192,10 +192,12 @@ class VentaController extends Controller
             'descripcion' => 'CANTIDAD: ' . $request->cantidad . ' - PLATO: ' . $nomb1 . ' - ' . $nomb2
         ]);
 
+        /* ->with('status', 'Datos de venta registrado correctamente') */
+
         if (!empty($verif_ticket[0]->ticket)) {
-            return redirect()->route('venta.create.id.ticket', [$request->id_mesa, $nro_ticket])->with('status', 'Datos de venta registrado correctamente');
+            return redirect()->route('venta.create.id.ticket', [$request->id_mesa, $nro_ticket]);
         } else {
-            return redirect()->route('venta.create.id', $request->id_mesa)->with('status', 'Datos de venta registrado correctamente');
+            return redirect()->route('venta.create.id', $request->id_mesa);
         }
     }
 

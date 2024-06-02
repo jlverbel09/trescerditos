@@ -26,17 +26,21 @@ function calcularVenta() {
             }
 
 
-            await guardarVenta()
+            await focusGuardar()
         }
     });
 }
 
 
+function focusGuardar(){
+    $('#btnGuardar').focus()
+}
+/* 
 $(document).on('keypress', function (e) {
     if (e.which == 13) {
         alert('You pressed enter!');
     }
-});
+}); */
 
 
 
@@ -190,9 +194,15 @@ function calcularcantidad(signo) {
         valor = 0;
     }
     $('#cantidad').val(valor)
+    focusGuardar()
     return false
 }
-
+document.getElementById('__searchit1').addEventListener('keypress', function(event) {
+    if (event.keyCode == 13) {
+        calcularVenta()
+        event.preventDefault();
+    }
+});
 
 
 function pintarNumero(numero, completo = 0) {
@@ -221,7 +231,9 @@ function btnCompletado() {
 
     $('#valorFinal').val(valorFinal)
 }
-
+setInterval(function (){
+    $('#__searchit1').focus();
+  },15000)
 
 async function pagar() {
     var valor = $('#valorFinal').val();
@@ -338,3 +350,5 @@ function eliminarNumero() {
     } */
     $('#contenedorValor').val(str)
 }
+
+

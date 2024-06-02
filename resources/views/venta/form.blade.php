@@ -37,7 +37,7 @@
 
     <div class="col-12 mt-2">
         <label for="id_producto" style="width: 100%">Producto</label>
-        <select name="id_producto" style="width: 100%" class="select2 dark" id="id_producto" onchange="calcularVenta()"
+        <select name="id_producto" style="width: 100%" class="buscador dark" id="id_producto" onchange="calcularVenta()"
             autofocus class="form-control form-control-dark form-control-sm shadown-sm @error('id_producto') is-invalid   @enderror">
             <option value="">Seleccionar</option>
             @foreach ($listProducto as $producto)
@@ -78,11 +78,7 @@
         </div>
     </div>
 
-
-    <div class="col-12 mt-2">
-
-
-    </div>
+    
 
 
     <div class="col-12 mt-2">
@@ -122,7 +118,7 @@
             @enderror
         </div>
         <div class="col-6 mt-4  ">
-            <input type="submit" value="{{ $btn }}" class="btn btn-{{ $btn_accion }} btn-sm w-100 h-100">
+            <input type="submit"  aria-hidden="true" id="btnGuardar" value="{{ $btn }}" class="btn btn-{{ $btn_accion }} btn-sm w-100 h-100">
         </div>
 
     </div>

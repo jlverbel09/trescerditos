@@ -16,7 +16,9 @@ class PagosExport implements FromCollection, WithHeadings
             'Mesa',
             'Tipo Pago',
             'Id Pago',
-            'Total',
+            'Pagado',
+            'Devolucion',
+            'Recaudado',
             'Usuario Reg',
             'Fecha  Reg'
         ];
@@ -31,6 +33,8 @@ class PagosExport implements FromCollection, WithHeadings
          DB::raw("case when pagos.tipo_pago = 1 then 'EFECTIVO' when  pagos.tipo_pago = 2 then  'VISA' end as tipopago"),
         'pagos.id as Id pago',
         'pagos.valor as total',
+        'pagos.devolucion as devolucion',
+        DB::raw("(pagos.valor - pagos.devolucion)"),
         'users.name as nombre',
         'pagos.created_at',
         )

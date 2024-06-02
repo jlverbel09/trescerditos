@@ -62,7 +62,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
-
+   
     <style>
        /*  * {
             font-size: 15px;
@@ -76,9 +76,10 @@
         @include('layouts.control')
         @include('layouts.footer')
     </main>
-
+    <script src="{{asset('js/buscador.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
+    
 </body>
 
 </html>
