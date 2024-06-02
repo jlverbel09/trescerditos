@@ -76,7 +76,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">No existen registros</td>
+                        <td colspan="9">No existen registros</td>
                     </tr>
                 @endforelse
 

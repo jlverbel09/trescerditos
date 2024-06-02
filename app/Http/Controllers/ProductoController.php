@@ -25,7 +25,7 @@ class ProductoController extends Controller
      */
     public function create(Producto $producto)
     {
-        $list = $producto->get();
+        $list = $producto->orderBy('id_producto')->get();
         return view('producto.create', [
             'data' => $list,
             'titleform' => 'Crear producto',

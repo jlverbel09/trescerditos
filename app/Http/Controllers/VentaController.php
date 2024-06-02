@@ -81,7 +81,7 @@ class VentaController extends Controller
             ->orderBy('numero')
             ->get();
 
-        $listProductos = Producto::get();
+        $listProductos = Producto::orderBy('id_producto')->get();
         $list = Venta::select(
             'ventas.id',
             'ventas.id_producto',
