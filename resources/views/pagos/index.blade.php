@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    td {
+        border: none
+    }
+
+    td.borde {
+        border-top: 1px solid #383d3f
+    }
+</style>
     <div class="row justify-content-center mt-3">
         <div class="col-8 col-xl-11 ">
             <h2>{{ $titleform }}</h2>
@@ -12,16 +21,6 @@
                 </a>
             @endif
         </div>
-        <style>
-            td {
-                border: none
-            }
-
-            td.borde {
-                border-top: 1px solid #383d3f
-            }
-        </style>
-
         <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas ">
             <table class="table  table-dark" style="border: 1px solid #383d3f">
                 <tr>

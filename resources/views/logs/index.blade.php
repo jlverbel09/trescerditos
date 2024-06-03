@@ -31,7 +31,6 @@
                     CIERRE
                 </div>
             </div>
-
             @forelse ($aperturas as $apertura)
                 <div class="accordion my-2" id="accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
 
@@ -44,8 +43,6 @@
                                 <div class="col-2">
                                     {{ strtoupper($apertura->nombremesa) }}
                                 </div>
-
-
                                 <div class="col-2">
                                     @if ($apertura->ticket == 0)
                                         MESA ABIERTA
@@ -68,26 +65,18 @@
                         <div id="collapseOne{{ $apertura->id_mesa . $apertura->ticket }}" class="accordion-collapse collapse "
                             data-bs-parent="#accordionExample{{ $apertura->id_mesa . $apertura->ticket }}">
                             <div class="accordion-body m-0 ">
-
-
-
                                 <table class="table  table-bordered table-dark" border="0">
                                     <tr>
                                         <th><b>Fecha</b></th>
                                         <th><b>Usuario</b></th>
-                                        {{--  <th><b>Ticket</b></th>
-                                        <th><b>Mesa</b></th> --}}
                                         <th><b>Acción</b></th>
                                         <th><b>Descripción</b></th>
-
                                     </tr>
                                     @foreach ($data as $d)
                                         @if ($apertura->id_mesa == $d->id_mesa && $apertura->ticket == $d->ticket)
                                             <tr>
                                                 <td class="borde">{{ $d->created_at }} </td>
                                                 <td class="borde">{{ strtoupper($d->name) }}</td>
-                                                {{-- <td class="borde">{{ $d->ticket }}</td>
-                                                <td class="borde">{{ $d->id_mesa }} </td> --}}
                                                 <td class="borde">{{ $d->accion }}</td>
                                                 <td class="borde">{{ $d->descripcion }}</td>
                                             </tr>
@@ -95,31 +84,15 @@
                                     @endforeach
 
                                 </table>
-
-
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
             @empty
                 <div class="col-12 p-2">
                     No existen registros
                 </div>
             @endforelse
-
-
-
-
-
-
-
-
         </div>
     </div>
 @endsection

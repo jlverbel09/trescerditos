@@ -4,7 +4,6 @@
             <thead class="thead">
                 <tr>
                     <th class="text-center">Acciones</th>
-                    {{-- <th>ID</th> --}}
                     <th>ID.&nbsp;Producto</th>
                     <th>Nombre 1</th>
                     <th>Nombre 2</th>
@@ -40,7 +39,6 @@
 
                         </td>
 
-                        {{-- <td>{{ $producto['id'] }}</td> --}}
                         <td>{{ $producto['id_producto'] }}</td>
                         <td>{{ $producto['nombre1'] }}</td>
                         <td>{{ $producto['nombre2'] }}</td>

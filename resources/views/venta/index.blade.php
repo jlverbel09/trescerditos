@@ -3,7 +3,7 @@
 
         <div class="row ">
             <div class="col-12 scroll table-ventas" {{-- style="overflow: scroll" --}}>
-                <table class="table table-dark table-bordered border-1 table-sm  table-responsive " >
+                <table class="table table-dark table-bordered border-1 table-sm  table-responsive ">
                     <thead class="thead">
                         <tr>
                             <th class="text-center">Acciones</th>
@@ -18,23 +18,23 @@
                             <th>Comentario</th>
                             <th>Observación</th>
                             <th>Fec.&nbsp;Creación</th>
-                           {{--  <th>Fec.&nbsp;Modificación</th> --}}
-    
+                            {{--  <th>Fec.&nbsp;Modificación</th> --}}
+
                         </tr>
                     </thead>
                     <tbody class="tbody">
                         @php
                             $total = 0;
                         @endphp
-    
+
                         @forelse ($data as $venta)
                             @php
                                 $total = $total + $venta['precio_total'];
                             @endphp
                             <tr>
                                 <td class="text-center pt-2 justify-content-center">
-    
-                                   {{--  <a class="btn btn-warning btn-sm " href="{{ route('venta.edit', $venta) }}">
+
+                                    {{--  <a class="btn btn-warning btn-sm " href="{{ route('venta.edit', $venta) }}">
                                         <i class="fa fa-edit text-white"></i>
                                     </a>
                                     &nbsp; --}}
@@ -44,12 +44,12 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-    
+
                                 </td>
-    
+
                                 {{-- <td>{{ $venta['id'] }}</td> --}}
                                 <td>{{ $venta['id_producto'] }}</td>
-                               {{--  <td>{{ $venta['mesa'] }}</td> --}}
+                                {{--  <td>{{ $venta['mesa'] }}</td> --}}
                                 <td>{{ $venta['nombre1'] }}</td>
                                 <td>{{ $venta['nombre2'] }}</td>
                                 <td class="text-center">{{ $venta['cantidad'] }}</td>
@@ -59,32 +59,26 @@
                                 <td>{{ $venta['observacion'] }}</td>
                                 <td>{{ $venta['created_at'] }}</td>
                                 {{-- <td>{{ $venta['updated_at'] }}</td> --}}
-    
+
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="11" class="text-left">No existe ningún registro</td>
                             </tr>
                         @endforelse
-    
+
                     </tbody>
                 </table>
             </div>
         </div>
-    
-    
-    
-    
-    
-    
-    
-    
+
         <div class="row">
             <div class="col-12">
                 <hr>
             </div>
             <div class="col-12">
-                <table class="table table-dark table-bordered border-1 table-sm  table-responsive text-center text-center">
+                <table
+                    class="table table-dark table-bordered border-1 table-sm  table-responsive text-center text-center">
                     <thead class="thead">
                         <tr>
                             <td width="30%">
@@ -102,7 +96,7 @@
                                         onchange="adicionarServicio({{ $total }},{{ $iva }})">&nbsp;€{{ $iva }}
                                     <input type="hidden" id="ivatext" value="0">
                                 </div>
-    
+
                             </td>
                         </tr>
                     </thead>
@@ -120,46 +114,47 @@
                             <td width="10%">
                                 <b>TOTAL</b>
                             </td>
-                            <input type="hidden" id="valorTotalFinal" value="{{$total - $pagado}}">
-                            <input type="hidden" id="campopagado" value="{{$pagado}}">
+                            <input type="hidden" id="valorTotalFinal" value="{{ $total - $pagado }}">
+                            <input type="hidden" id="campopagado" value="{{ $pagado }}">
                             <td width="20%" id="totalFinal">
                                 {{ '€' . number_format($total, 2, ',', '.') }}
-                               
+
                             </td>
 
-                            <td width="10%" >
+                            <td width="10%">
                                 <b>PAGADO</b>
                             </td>
-                            <td width="20%"  id="pagado">
+                            <td width="20%" id="pagado">
                                 {{ '€' . number_format($pagado, 2, ',', '.') }}
                             </td>
 
-                            <td width="10%" >
+                            <td width="10%">
                                 <b>RESTANTE</b>
                             </td>
-                            <td width="20%" id="campopagado_" >
+                            <td width="20%" id="campopagado_">
                                 {{ '€' . number_format($total - $pagado, 2, ',', '.') }}
                             </td>
-    
+
                         </tr>
                     </thead>
                 </table>
             </div>
-            
+
             <div class="col-8 text-right justify-content-end d-flex offset-4">
-                {{-- <a type="button" onclick="reabrirmesa({{request()->idmesa}})" class="btn btn-info m-1 text-white @if($mesasActivas > 0) disabled @endif">
+                {{-- <a type="button" onclick="reabrirmesa({{request()->idmesa}})" class="btn btn-info m-1 text-white @if ($mesasActivas > 0) disabled @endif">
                     RE-ABRIR ULTIMO TICKET DE LA MESA <i class="fa fa-lock-open"></i>
                 </a> --}}
-                <a type="button" onclick="cerrarVenta({{request()->idmesa}}, {{request()->idticket}})"  class="btn btn-danger m-1 @if($total == 0) disabled @endif">
+                <a type="button" onclick="cerrarVenta({{ request()->idmesa }}, {{ request()->idticket }})"
+                    class="btn btn-danger m-1 @if ($total == 0) disabled @endif">
                     CERRAR VENTA <i class="fa fa-lock"></i>
                 </a>
-                <a class="btn btn-success m-1 @if($total == 0) disabled @endif" target="_blank"
-                    onclick="generarPDF({{request()->idmesa}},{{ $iva }}, {{ $servicio }})" >
+                <a class="btn btn-success m-1 @if ($total == 0) disabled @endif" target="_blank"
+                    onclick="generarPDF({{ request()->idmesa }},{{ $iva }}, {{ $servicio }})">
                     IMPRIMIR <i class="fa fa-print"></i>
                 </a>
             </div>
-    
-            
+
+
         </div>
     </div>
 

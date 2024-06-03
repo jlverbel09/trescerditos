@@ -66,9 +66,6 @@ class VentaController extends Controller
             ->sum('ventas.precio_total');
 
         $mesasActivas = Venta::select('ticket')->where('ventas.id_mesa', '=', $request->idmesa)->where('estado', '=', 1)->count('ticket');
-
-
-
         $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
 
         $mesas = Mesa::select('mesas.id', 'numero', 'descripcion', 'ventas.estado', DB::raw('max(ventas.ticket) as ticket'))
@@ -118,7 +115,6 @@ class VentaController extends Controller
             $valorpago = 0;
         }
 
-
         return view('venta.create', [
             'mesaSelect' => [],
             'mesas' => $mesas,
@@ -141,10 +137,7 @@ class VentaController extends Controller
     public function store(Venta $venta, saveVentaRequest $request)
     {
 
-
         $verif_ticket = Venta::select('ticket')->where('ticket', '=', $request->ticket)->groupBy('ticket')->get();
-
-
         if (!empty($verif_ticket[0]->ticket)) {
             $nro_ticket = $verif_ticket[0]->ticket;
         } else {
@@ -165,10 +158,6 @@ class VentaController extends Controller
         }
         Mesa::where('numero', '=', $request->id_mesa)
             ->update(['estado' => 1]);
-
-
-
-
 
         $venta->create([
             'ticket' => $nro_ticket,
@@ -268,7 +257,6 @@ class VentaController extends Controller
             'descripcion' => 'CANTIDAD: ' . $venta->cantidad . ' - PLATO: ' . $nomb1 . ' - ' . $nomb2
         ]);
 
-
         $venta->delete();
         return redirect()->route('venta.create.id', $venta->id_mesa)->with('status', 'Producto eliminado correctamente');
     }
@@ -304,7 +292,6 @@ class VentaController extends Controller
             //->where('ventas.estado', '=', 0)
 
             ->orderBy('ticket', 'desc')
-
             ->get();
 
         return view('ventas-cerradas.index', [
@@ -324,7 +311,7 @@ class VentaController extends Controller
             ]);
             Mesa::where('numero', '=', $request->id_mesa)
                 ->update(['estado' => 1]);
-            return true;
+            return 1;
         }
         return 0;
     }

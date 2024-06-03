@@ -1,8 +1,5 @@
-{{-- @if (!empty($venta->ticket)) {{ old('ticket', $venta->ticket) }} @else {{$ticket}} @endif --}}
-
 <div class="row">
-    <input type="hidden" name="_ticket" id="_ticket"
-        value="{{$ticket}}">
+    <input type="hidden" name="_ticket" id="_ticket" value="{{ $ticket }}">
     <div class="col-12 mt-2">
         <label for="ticket">Ticket</label>
         <input type="text" readonly placeholder="Ticket" name="ticket" id="ticket"
@@ -14,8 +11,6 @@
             </span>
         @enderror
     </div>
-
-
     <div class="col-12 mt-2">
         <label for="id_mesa">Mesa</label>
         <select name="id_mesa" id="id_mesa"
@@ -33,12 +28,11 @@
         @enderror
     </div>
 
-
-
     <div class="col-12 mt-2">
         <label for="id_producto" style="width: 100%">Producto</label>
         <select name="id_producto" style="width: 100%" class="buscador dark" id="id_producto" onchange="calcularVenta()"
-            autofocus class="form-control form-control-dark form-control-sm shadown-sm @error('id_producto') is-invalid   @enderror">
+            autofocus
+            class="form-control form-control-dark form-control-sm shadown-sm @error('id_producto') is-invalid   @enderror">
             <option value="">Seleccionar</option>
             @foreach ($listProducto as $producto)
                 <option value="{{ $producto->id_producto }}" @if (in_array($producto->id_producto, $ventaSelect)) selected @endif>
@@ -51,10 +45,6 @@
             </span>
         @enderror
     </div>
-
-
-    {{-- $venta->cantidad --}}
-
     <div class="col-12 row p-0 m-0 mt-2">
         <label for="cantidad">Cantidad</label>
         <div class="col-4 pr-0">
@@ -77,10 +67,6 @@
                 onclick="calcularcantidad('+');calcularVenta()">+</button>
         </div>
     </div>
-
-    
-
-
     <div class="col-12 mt-2">
         <label for="precio">Precio</label>
         <input type="number" onkeyup="calculoproducto()" placeholder="Precio" name="precio" id="precio"
@@ -96,8 +82,8 @@
     <div class="col-12 mt-2">
         <label for="precio total">Precio Total</label>
         <input type="number" readonly placeholder="Precio Total" name="precio_total" id="precio_total"
-            class="form-control dark form-control-sm shadown-sm @error('precio_total') is-invalid   @enderror" step="0.01"
-            value="{{ old('precio_total', $venta->precio_total) }}">
+            class="form-control dark form-control-sm shadown-sm @error('precio_total') is-invalid   @enderror"
+            step="0.01" value="{{ old('precio_total', $venta->precio_total) }}">
         @error('precio_total')
             <span class="invalid-feedback">
                 <strong>{{ $message }}</strong>
@@ -105,7 +91,7 @@
         @enderror
     </div>
 
-    
+
     <div class="col-12 row m-0 p-0">
         <div class="col-6 mt-2 pe-0">
             <label for="observacion">Observación</label>
@@ -118,19 +104,12 @@
             @enderror
         </div>
         <div class="col-6 mt-4  ">
-            <input type="submit"  aria-hidden="true" id="btnGuardar" value="{{ $btn }}" class="btn btn-{{ $btn_accion }} btn-sm w-100 h-100">
+            <input type="submit" aria-hidden="true" id="btnGuardar" value="{{ $btn }}"
+                class="btn btn-{{ $btn_accion }} btn-sm w-100 h-100">
         </div>
 
     </div>
-
-
-
-
-    
-
 </div>
-
-
 <script>
     $('.select2').select2();
 </script>

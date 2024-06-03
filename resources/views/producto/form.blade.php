@@ -1,6 +1,4 @@
 <div class="row">
-
-
     <div class="col-12 mt-2">
         <label for="id producto">ID Producto</label>
         <input type="number" placeholder="ID" name="id_producto" id="id_producto"
@@ -38,9 +36,9 @@
     </div>
 
     <div class="col-12 mt-2">
-        <label for="precio">Precio</label> 
-        <input type="number" onkeyup="calculoproducto()" placeholder="Precio" name="precio" id="precio"  step="0.01"
-            class="form-control dark form-control-sm shadown-sm @error('precio') is-invalid   @enderror"
+        <label for="precio">Precio</label>
+        <input type="number" onkeyup="calculoproducto()" placeholder="Precio" name="precio" id="precio"
+            step="0.01" class="form-control dark form-control-sm shadown-sm @error('precio') is-invalid   @enderror"
             value="{{ old('precio', $producto->precio) }}">
         @error('precio')
             <span class="invalid-feedback">
@@ -49,31 +47,16 @@
         @enderror
     </div>
 
-        {{-- 
- 
-<div class="col-12 mt-2">
-        <label for="iva">IVA</label>
-        <input type="number" placeholder="IVA" name="iva" id="iva"
-            class="form-control dark form-control-sm shadown-sm @error('iva') is-invalid   @enderror"
-            value="{{ old('iva', $producto->iva) }}">
-        @error('iva')
-            <span class="invalid-feedback">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div> --}}
-
     <div class="col-12 mt-2">
         <label for="comentario">Comentario</label>
-        <textarea name="comentario" placeholder="Comentario" id="comentario" cols="30" rows="4" class="form-control dark form-control-sm shadown-sm @error('comentario') is-invalid   @enderror">{{ old('comentario', $producto->comentario) }}</textarea>
+        <textarea name="comentario" placeholder="Comentario" id="comentario" cols="30" rows="4"
+            class="form-control dark form-control-sm shadown-sm @error('comentario') is-invalid   @enderror">{{ old('comentario', $producto->comentario) }}</textarea>
         @error('comentario')
             <span class="invalid-feedback">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
     </div>
-
-
     <div class="col-12 mt-4 ">
         <input type="submit" value="{{ $btn }}" class="btn btn-{{ $btn_accion }} btn-sm w-100">
     </div>

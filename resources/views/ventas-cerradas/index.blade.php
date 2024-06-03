@@ -23,7 +23,7 @@
         </style>
 
         <div class="col-lg-12 col-sm-12 mt-3 scroll table-ventas-cerradas ">
-            <table class="table table-dark "style="border: 1px solid #383d3f"  border="0">
+            <table class="table table-dark "style="border: 1px solid #383d3f" border="0">
                 <tr>
                     <th class="text-center"><b>Reabrir</b></th>
                     <th><b>Ticket</b></th>
@@ -35,17 +35,14 @@
                     <th><b>Precio</b></th>
                     <th><b>Precio Total</b></th>
                     <th><b>Observación</b></th>
-
                 </tr>
-
                 @php
                     $sum = 0;
                     $ticketanterior = -1;
                 @endphp
                 @forelse ($data as $d)
-   
                     <tr>
-                        @if ($d->ticket.'0'.$d->mesa == $ticketanterior)
+                        @if ($d->ticket . '0' . $d->mesa == $ticketanterior)
                             @php
                                 $sum = $sum + 1;
                             @endphp
@@ -56,7 +53,7 @@
                         @else
                             @php
 
-                                $ticketanterior = $d->ticket.'0'.$d->mesa;
+                                $ticketanterior = $d->ticket . '0' . $d->mesa;
                                 $sum = 1;
 
                             @endphp
@@ -72,10 +69,9 @@
                             </td>
                             <td class="borde">
                                 @if ($d->estadomesa == 0)
-                                {{ str_pad( $d->ticket, 6, '0', STR_PAD_LEFT) }}
-                                
+                                    {{ str_pad($d->ticket, 6, '0', STR_PAD_LEFT) }}
                                 @else
-                                   -
+                                    -
                                 @endif
                             <td class="borde">{{ $d->mesa }}</td>
                             <td class="borde">{{ $d->estado }}</td>

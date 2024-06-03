@@ -26,9 +26,6 @@ class saveProductoRequest extends FormRequest
             'nombre1' => 'required',
             'nombre2' => 'required',
             'precio' => 'required',
-           /*  'cantidad' => 'required',
-            'precio_total' => 'required',
-            'iva' => 'required', */
             'comentario' => 'required'
         ];
     }

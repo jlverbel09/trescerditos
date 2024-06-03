@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-   @include('venta.cabecera')
-   @include('calculadora')
+    @include('venta.cabecera')
+    @include('calculadora')
     <div class="row ">
         <div class="col-12">
             <h2>{{ $titleform }}</h2>

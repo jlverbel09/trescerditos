@@ -12,8 +12,9 @@
                     <div class="col-12 mb-2">
                         <input type="hidden" id="tpago" value="0">
                         <input type="hidden" id="valorFinal" value="0">
-                        <input type="text" id="contenedorValor" 
-                            class="form-control contenedorValor dark" value=""></div>
+                        <input type="text" id="contenedorValor" class="form-control contenedorValor dark"
+                            value="">
+                    </div>
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
                             onclick="pintarNumero('1'); btnCompletado()">1</div>
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
@@ -21,8 +22,8 @@
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
                             onclick="pintarNumero('3'); btnCompletado()">3</div>
 
-                    <div class="col-3 "><button class="btn btn-danger w-100 botones my-2" id="eliminarNumero" onclick="eliminarNumero(); btnCompletado()"
-                            style="font-size: 14px; font-weight: bold">
+                    <div class="col-3 "><button class="btn btn-danger w-100 botones my-2" id="eliminarNumero"
+                            onclick="eliminarNumero(); btnCompletado()" style="font-size: 14px; font-weight: bold">
                             ELIMINAR</div>
 
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
@@ -31,7 +32,7 @@
                             onclick="pintarNumero('5'); btnCompletado()">5</div>
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
                             onclick="pintarNumero('6'); btnCompletado()">6</div>
-                    <div class="col-3 "><button class="btn btn-success w-100 botones my-2" 
+                    <div class="col-3 "><button class="btn btn-success w-100 botones my-2"
                             style="font-size: 14px; font-weight: bold" data-bs-dismiss="modal">
                             CANCELAR
                     </div>
@@ -45,9 +46,9 @@
                             onclick="pintarNumero('9'); btnCompletado()">9</div>
 
                     <div class="col-3 "><button class="btn btn-primary w-100 botones my-2"
-                            style="font-size: 14px; font-weight:bold" 
-                            onclick="pagar()"
-                            {{-- onclick="pintarNumero(document.getElementById('valorTotalFinal').value,1)" --}}><div id="textoOk"></div></div>
+                            style="font-size: 14px; font-weight:bold" onclick="pagar()" {{-- onclick="pintarNumero(document.getElementById('valorTotalFinal').value,1)" --}}>
+                            <div id="textoOk"></div>
+                    </div>
 
                     <div class="col-3 "><button class="btn btn-secondary w-100 botones my-2"
                             onclick="pintarNumero('0'); btnCompletado()">0</div>

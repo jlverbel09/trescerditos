@@ -20,8 +20,6 @@ class PDFController extends Controller
 {
     public function generatePDF($idmesa, $iva, $servicio = 0)
     {
-
-        // dd($data);
         $productos = Producto::get();
         $venta = Venta::select(
             'ventas.ticket',
@@ -45,17 +43,13 @@ class PDFController extends Controller
             ->where('ventas.estado', '=', 1)
             ->get();
 
-
         $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
-
-
 
         $suma = Venta::select('ventas.precio_total')
             ->join('productos', 'productos.id_producto', 'ventas.id_producto')
             ->where('ventas.id_mesa', '=', $idmesa)
             ->where('ventas.estado', '=', 1)
             ->sum('ventas.precio_total');
-
 
         $factura = Factura::select('factura')->orderBy('factura', 'desc')->get();
 
@@ -72,16 +66,11 @@ class PDFController extends Controller
             'totalFinal' => $suma + request()->servicio
         ];
 
-
         $pdf = FacadePdf::loadView('pdf', $data);
         $pdf->setOption(['defaultFont' => 'sans-serif']);
-        //$pdf->set_paper("A4", "portrait");
         $pdf->set_paper(array(0, 0, 210, 400));
-        //$pdf->set_paper('b7', 'portrait');
         return $pdf->stream();
         //return view('pdf', $data);
-
-
     }
 
     public function cerrarVenta(Request $request)
@@ -91,14 +80,11 @@ class PDFController extends Controller
             $ticket = $request->id_ticket;
         } else {
             $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
-            $ticket = $ticket[0]->ticket.'0'.$idmesa;
+            $ticket = $ticket[0]->ticket . '0' . $idmesa;
         }
 
-
-       
         $venta = Venta::where('id_mesa', '=', $idmesa)->where('estado', '=', 1)
             ->update(['estado' => 0, 'ticket' => $ticket]);
-
 
         if ($venta > 0) {
 
@@ -112,16 +98,12 @@ class PDFController extends Controller
 
             Log::where('id_mesa', '=', $idmesa)->where('ticket', '=', 0)->update(['ticket' =>  $ticket]);
 
-           
-                $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
-                $ticket = $ticket[0]->ticket;
-                Ticket::insert([
-                    'ticket' => $ticket + 1,
-                    'created_at' => now()
-                ]);
-            
-
-
+            $ticket = Ticket::select('ticket')->orderBy('ticket', 'desc')->get();
+            $ticket = $ticket[0]->ticket;
+            Ticket::insert([
+                'ticket' => $ticket + 1,
+                'created_at' => now()
+            ]);
 
             $factura = Factura::select('factura')->orderBy('factura', 'desc')->get();
             Factura::insert([
@@ -131,7 +113,6 @@ class PDFController extends Controller
 
             Mesa::where('numero', '=', $idmesa)
                 ->update(['estado' => 0]);
-        } 
-        
+        }
     }
 }

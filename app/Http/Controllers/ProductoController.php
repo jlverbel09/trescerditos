@@ -44,20 +44,9 @@ class ProductoController extends Controller
             'nombre1' => $request->nombre1,
             'nombre2' => $request->nombre2,
             'precio' => $request->precio,
-          /*   'cantidad' => $request->cantidad,
-            'precio_total' => $request->precio_total,
-            'iva' => $request->iva, */
             'comentario' => $request->comentario,
         ]);
         return redirect()->route('producto.create')->with('status','Producto creado correctamente');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(producto $producto)
-    {
-        //
     }
 
     /**

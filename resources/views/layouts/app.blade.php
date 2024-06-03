@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{asset('img/logo.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Tres Cerditos {{-- {{ config('app.name', 'Inicio') }} --}}</title>
@@ -24,12 +23,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
-   
-    <style>
-       /*  * {
-            font-size: 15px;
-        } */
-    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -38,10 +31,10 @@
         @include('layouts.control')
         @include('layouts.footer')
     </main>
-    <script src="{{asset('js/buscador.js')}}"></script>
+    <script src="{{ asset('js/buscador.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
-    
+
 </body>
 
 </html>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{asset('img/logo.png')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon" />
     <title>Tres cerditos</title>
 
     <!-- Fonts -->
@@ -17,10 +17,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-900 antialiased " style="background-image: url('https://www.todofondos.net/wp-content/uploads/1920x1080-Fondo-de-pantalla-hexadecimal-negro.jpg');background-size:cover">
+<body class="font-sans text-gray-900 antialiased "
+    style="background-image: url('https://www.todofondos.net/wp-content/uploads/1920x1080-Fondo-de-pantalla-hexadecimal-negro.jpg');background-size:cover">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-black   ">
         <div class="fondos" style="">
-            
+
             <div class="fondo2" style="background-image: url({{ asset('img/fondo.png') }}) ; "></div>
             {{-- <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipPprc1vuwoydBuYWe8dpSItwlermVlaXGLxqnAq=s1360-w1360-h1020-rw)"></div>
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipP_bWkQu98SRvQSAZ2S9JB7AizyTOkZLPR57Z8u=s1360-w1360-h1020-rw)"></div>
@@ -49,18 +50,18 @@
             <div class="fondo" style="background-image: url(https://lh3.googleusercontent.com/p/AF1QipPJnMTqpidd0fhwADtYlABrc0oy8RxpuuAsPPlX=s1360-w1360-h1020-rw)"></div>
          --}}
         </div>
-       {{--  <div class="divencima"></div>   --}} 
-     
-        <div
-            class="w-full sm:max-w-md mt-6 mb-5 px-6 py-4  border shadow-md overflow-hidden sm:rounded-lg" style="background-color: #242526">
+        {{--  <div class="divencima"></div>   --}}
+
+        <div class="w-full sm:max-w-md mt-6 mb-5 px-6 py-4  border shadow-md overflow-hidden sm:rounded-lg"
+            style="background-color: #242526">
             <div class="text-center">
                 <a href="/" class="logocenter">
                     <img src="{{ asset('img/logo.png') }}" class="logologin" alt="">
-                    
+
                 </a>
-                <h2 class="text-lg">Empanadería  Los Tres Cerditos</h2>
+                <h2 class="text-lg">Empanadería Los Tres Cerditos</h2>
             </div>
-    
+
             {{ $slot }}
         </div>
         <br>
